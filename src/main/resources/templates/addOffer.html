@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Adding</title>
+  <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
+  <style>
+    form {
+      padding: 4em 1em 6em;
+    }
+    label {
+      padding-left: 0.1em;
+    }
+    .form-group {
+      padding-top: 0.7em;
+    }
+  </style>
+</head>
+
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="/common/navbar.html"></nav>
+
+<form method="post">
+<section>
+  <div class="form-group">
+    <hr>
+    <label for="name">Service name</label>
+    <input type="text" class="form-control" id="name" placeholder="Service name" />
+  </div>
+  <hr>
+  <div class="form-group">
+    <hr>
+    <label for="start-price">Starting price</label>
+    <input type="number" class="form-control" id="start-price" placeholder="0.00" />
+    <label for="max-price">Maximum price</label>
+    <input type="number" class="form-control" id="max-price" placeholder="100000.00" />
+  </div>
+  <hr>
+  <div class="form-group">
+    <hr>
+    <label for="s-description">Short description</label>
+    <textarea rows="2" class="form-control" id="s-description"> </textarea>
+    <label for="v-description">Verbose description</label>
+    <textarea rows="4" class="form-control" id="v-description"> </textarea>
+  </div>
+  <hr>
+</section>
+</form>
+
+<!-- Footer-->
+<footer th:replace="/common/footer.html"></footer>
+<script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+</body>
+</html>

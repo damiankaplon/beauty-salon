@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Home</title>
+        <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
+    </head>
+
+    <body>
+        <!-- Responsive navbar-->
+        <nav th:replace="/common/navbar.html"></nav>
+
+        <header class="py-5 bg-image-full" th:style="'background-image:url(/img/home2.jpg); background-repeat:no-repeat; background-size:cover;'">
+            <div class="text-center my-5">
+                <img class="img-fluid rounded-circle mb-4"
+                     th:src="@{/img/logos/logo.png}"
+                     src="../static/img/logos/logo.png"
+                     width="35%"
+                     alt="logo"
+                     style="opacity: 0.9;"/>
+
+                <h1 style="color:rgb(243, 227, 84);
+                -webkit-text-stroke-width: 0.018em;
+                -webkit-text-stroke-color: black;
+                font-size: large"><i>By</i></h1>
+
+                <h5 style="color: rgb(243, 227, 84);
+                -webkit-text-stroke-width: 0.018em;
+                -webkit-text-stroke-color: black;
+                font-size: x-large;
+                font-weight: bolder"><i>Name Surname</i></h5>
+            </div>
+        </header>
+        <!-- Content section-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>Lorem Ipsum</h2>
+                        <p class="lead">is simply dummy text of the printing and typesetting industry ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        <p class="mb-0">The universe is almost 14 billion years old, and, wow! Life had no problem starting here on Earth! I think it would be inexcusably egocentric of us to suggest that we're alone in the universe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="py-5 bg-image-full" th:style="'background-image:url(/img/home1.jpg); background-repeat:no-repeat; background-size:cover;'">
+            <div style="height: 20rem"></div>
+        </div>
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>Lorem Ipsum</h2>
+                        <p class="lead">
+                            is simply dummy text of the printing and typesetting industry ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        </p>
+                        <p class="mb-0">
+                            The universe is almost 14 billion years old, and, wow! Life had no problem
+                            starting here on Earth! I think it would be inexcusably egocentric of us to suggest that
+                            we're alone in the universe.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer th:replace="/common/footer.html"></footer>
+        <script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+    </body>
+</html>
