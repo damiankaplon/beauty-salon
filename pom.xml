@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pl.damiankaplon</groupId>
-    <artifactId>beautysaloon</artifactId>
+    <artifactId>beauty-space</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>beautysaloon</name>
-    <description>beautysaloon</description>
+    <name>beauty-space</name>
+    <description>beauty-space</description>
     <properties>
         <java.version>11</java.version>
     </properties>
