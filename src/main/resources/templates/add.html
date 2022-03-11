@@ -7,7 +7,6 @@
   <meta name="author" content="" />
   <title>Adding</title>
   <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
-  <!-- Core theme CSS (includes Bootstrap)-->
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
   <style>
     form {
@@ -15,9 +14,21 @@
     }
     label {
       padding-left: 0.1em;
+      width: 100%;
     }
     .form-group {
       padding-top: 0.7em;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    .custom-file {
+      alignment: center;
+      text-align: center;
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -26,35 +37,42 @@
 <!-- Responsive navbar-->
 <nav th:replace="/common/navbar.html"></nav>
 
-<form method="post">
+<form action="#" th:action="@{/treatment/add}" th:object="${dto}" enctype="multipart/form-data" method="post">
 <section>
   <div class="form-group">
-    <hr>
-    <label for="name">Service name</label>
-    <input type="text" class="form-control" id="name" placeholder="Service name" />
+    <label for="name">Treatment name</label>
+    <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Treatment name" />
   </div>
   <hr>
   <div class="form-group">
     <hr>
     <label for="start-price">Starting price</label>
-    <input type="number" class="form-control" id="start-price" placeholder="0.00" />
+    <input type="number" th:field="*{from}" class="form-control" id="start-price" placeholder="0.00" />
     <label for="max-price">Maximum price</label>
-    <input type="number" class="form-control" id="max-price" placeholder="100000.00" />
+    <input type="number" th:field="*{to}" class="form-control" id="max-price" placeholder="100000.00" />
   </div>
   <hr>
   <div class="form-group">
     <hr>
     <label for="s-description">Short description</label>
-    <textarea rows="2" class="form-control" id="s-description"> </textarea>
+    <textarea rows="2" th:field="*{shortDescription}" class="form-control" id="s-description"> </textarea>
     <label for="v-description">Verbose description</label>
-    <textarea rows="4" class="form-control" id="v-description"> </textarea>
+    <textarea rows="4" th:field="*{fullDescription}" class="form-control" id="v-description"> </textarea>
   </div>
   <hr>
+  <label for="pic" class="custom-file">
+    <i class="fa fa-cloud-upload"></i> Choose image
+  </label>
+  <input id="pic" name="pic" type="file"/>
+  <hr>
+
+  <button class="btn btn-success" name="submit" type="submit" style="width: 100%">Submit</button>
 </section>
 </form>
 
 <!-- Footer-->
 <footer th:replace="/common/footer.html"></footer>
+
 <script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
 </body>
 </html>

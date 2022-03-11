@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Home</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
+    <style>
+        section {
+            padding-top: 5em;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Responsive navbar-->
+<nav th:replace="/common/navbar.html"></nav>
+
+<!-- Content section-->
+<section>
+    Added successfully!
+    <a th:href="@{/treatment/add}" class="btn btn-dark">Add more</a>
+    <a th:href="@{/}" class="btn btn-success">Go home</a>
+</section>
+<!-- Footer-->
+<footer th:replace="/common/footer.html"></footer>
+<script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+</body>
+</html>
