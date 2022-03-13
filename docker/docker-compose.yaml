@@ -12,7 +12,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "9090:9090"
+      - "5432:5432"
 
   phppgadmin:
     image: bitnami/phppgadmin:7

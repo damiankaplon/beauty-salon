@@ -37,7 +37,7 @@
 <!-- Responsive navbar-->
 <nav th:replace="/common/navbar.html"></nav>
 
-<form action="#" th:action="@{/treatment/add}" th:object="${dto}" enctype="multipart/form-data" method="post">
+<form action="#" th:action="@{/treatment/add}" th:object="${form}" enctype="multipart/form-data" method="post">
 <section>
   <div class="form-group">
     <label for="name">Treatment name</label>

@@ -1,14 +1,17 @@
 package pl.damiankaplon.beautysaloon.treatment;
 
-import lombok.Value;
+import javax.persistence.Embeddable;
 
-@Value
+@Embeddable
 class PriceRange {
-    Float from;
-    Float to;
+    private Float min;
+    private Float max;
+
+    //Only for JPA
+    protected PriceRange(){}
 
     PriceRange(Float from, Float to) {
-        this.from = from;
-        this.to = to;
+        this.min = from;
+        this.max = to;
     }
 }
