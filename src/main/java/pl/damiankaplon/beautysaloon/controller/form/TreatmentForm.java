@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class TreatmentForm {
-        private String name, shortDescription, fullDescription, from, to;
+        private String name, shortDescription, fullDescription, minPrice, maxPrice;
 }
