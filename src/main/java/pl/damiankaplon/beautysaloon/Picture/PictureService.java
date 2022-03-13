@@ -14,13 +14,18 @@ public class PictureService {
 
     public PictureDto upload(MultipartFile picture) throws IOException {
         byte[] bytes = picture.getBytes();
+
+        LocalDateTime timestamp = LocalDateTime.now();
         Path pathToSave = Paths.get(
                 Paths.get("").toAbsolutePath()
                 + "/src/main/resources/static/ServicesPictures/"
-                + LocalDateTime.now()
+                + timestamp
                 + picture.getOriginalFilename());
         Files.write(pathToSave, bytes);
 
-        return new PictureDto(pathToSave.toString());
+        String pathForObjects = "/ServicesPictures/"
+                        + timestamp
+                        + picture.getOriginalFilename();
+        return new PictureDto(pathForObjects);
     }
 }

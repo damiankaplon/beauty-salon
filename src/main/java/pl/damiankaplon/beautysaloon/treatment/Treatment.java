@@ -28,7 +28,7 @@ class Treatment {
         return Treatment.builder()
                 .uuid(UUID.randomUUID())
                 .name(dto.getName())
-                .priceRange(new PriceRange(Float.valueOf(dto.getFrom() + "0"), Float.valueOf(dto.getTo() + "0")))
+                .priceRange(new PriceRange(Float.valueOf(dto.getMinPrice() + "0"), Float.valueOf(dto.getMaxPrice() + "0")))
                 .shortDescription(dto.getShortDescription())
                 .fullDescription(dto.getFullDescription())
                 .picture(new Picture(dto.getPicturePath()))

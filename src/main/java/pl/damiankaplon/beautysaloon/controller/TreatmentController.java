@@ -12,9 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.damiankaplon.beautysaloon.Picture.PictureDto;
 import pl.damiankaplon.beautysaloon.Picture.PictureService;
 import pl.damiankaplon.beautysaloon.controller.form.TreatmentForm;
+import pl.damiankaplon.beautysaloon.treatment.TreatmentDto;
 import pl.damiankaplon.beautysaloon.treatment.TreatmentService;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/treatment")
@@ -26,8 +28,9 @@ class TreatmentController {
     private final ModelMapper modelMapper;
 
     @GetMapping("")
-    String getListedServicesPage() {
-//        model.addAllAttributes(List<Service> services);
+    String getListedServicesPage(Model model) {
+        List<TreatmentDto> treatments = treatmentService.getAllTreatments();
+        model.addAttribute("treatments", treatments);
         return "treatment";
     }
 
