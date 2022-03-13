@@ -15,10 +15,10 @@ public class PictureService {
     public PictureDto upload(MultipartFile picture) throws IOException {
         byte[] bytes = picture.getBytes();
         Path pathToSave = Paths.get(
-                Paths.get(".").toAbsolutePath()
+                Paths.get("").toAbsolutePath()
                 + "/src/main/resources/static/ServicesPictures/"
-                + picture.getOriginalFilename()
-                + LocalDateTime.now());
+                + LocalDateTime.now()
+                + picture.getOriginalFilename());
         Files.write(pathToSave, bytes);
 
         return new PictureDto(pathToSave.toString());
