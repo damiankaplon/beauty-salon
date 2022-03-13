@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon.controller;
+package pl.damiankaplon.beautyspace.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

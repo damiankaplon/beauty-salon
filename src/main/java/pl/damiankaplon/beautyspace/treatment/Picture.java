@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon.treatment;
+package pl.damiankaplon.beautyspace.treatment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Embeddable;
 
 @Embeddable
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-class PriceRange {
-    private Float minPrice;
-    private Float maxPrice;
-
+class Picture {
+    private String pathToFile;
 }

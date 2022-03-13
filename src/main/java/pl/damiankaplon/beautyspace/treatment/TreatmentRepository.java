@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon.treatment;
+package pl.damiankaplon.beautyspace.treatment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

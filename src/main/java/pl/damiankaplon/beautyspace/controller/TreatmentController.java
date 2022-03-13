@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon.controller;
+package pl.damiankaplon.beautyspace.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautysaloon.Picture.PictureDto;
-import pl.damiankaplon.beautysaloon.Picture.PictureService;
-import pl.damiankaplon.beautysaloon.controller.form.TreatmentForm;
-import pl.damiankaplon.beautysaloon.treatment.TreatmentDto;
-import pl.damiankaplon.beautysaloon.treatment.TreatmentService;
+import pl.damiankaplon.beautyspace.Picture.PictureDto;
+import pl.damiankaplon.beautyspace.Picture.PictureService;
+import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
+import pl.damiankaplon.beautyspace.treatment.TreatmentDto;
+import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.io.IOException;
 import java.util.List;

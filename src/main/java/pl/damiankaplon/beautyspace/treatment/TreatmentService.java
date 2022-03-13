@@ -1,10 +1,10 @@
-package pl.damiankaplon.beautysaloon.treatment;
+package pl.damiankaplon.beautyspace.treatment;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import pl.damiankaplon.beautysaloon.Picture.PictureDto;
-import pl.damiankaplon.beautysaloon.controller.form.TreatmentForm;
+import pl.damiankaplon.beautyspace.Picture.PictureDto;
+import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import java.util.List;
 import java.util.stream.Collectors;

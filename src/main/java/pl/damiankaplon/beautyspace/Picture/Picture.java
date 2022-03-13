@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon.Picture;
+package pl.damiankaplon.beautyspace.Picture;
 
 import java.util.UUID;
 

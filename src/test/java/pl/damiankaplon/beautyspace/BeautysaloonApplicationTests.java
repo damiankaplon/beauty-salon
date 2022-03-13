@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon;
+package pl.damiankaplon.beautyspace;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

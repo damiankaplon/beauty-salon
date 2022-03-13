@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautysaloon.controller.form;
+package pl.damiankaplon.beautyspace.controller.form;
 
 import lombok.Data;
 
