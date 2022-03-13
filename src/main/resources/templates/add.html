@@ -64,6 +64,7 @@
     <i class="fa fa-cloud-upload"></i> Choose image
   </label>
   <input id="pic" name="pic" type="file"/>
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
   <hr>
 
   <button class="btn btn-success" name="submit" type="submit" style="width: 100%">Submit</button>

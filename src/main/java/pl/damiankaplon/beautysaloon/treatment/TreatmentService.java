@@ -25,9 +25,8 @@ public class TreatmentService {
 
     public List<TreatmentDto> getAllTreatments() {
         List<Treatment> treatments = repo.findAll();
-        List<TreatmentDto> dtos = treatments.stream()
+        return treatments.stream()
                 .map(t -> mapper.map(t, TreatmentDto.class))
                 .collect(Collectors.toList());
-        return dtos;
     }
 }

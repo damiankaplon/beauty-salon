@@ -1,7 +1,6 @@
 package pl.damiankaplon.beautysaloon.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,6 @@ class TreatmentController {
 
     private final TreatmentService treatmentService;
     private final PictureService pictureService;
-    private final ModelMapper modelMapper;
 
     @GetMapping("")
     String getListedServicesPage(Model model) {
