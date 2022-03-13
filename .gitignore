@@ -4,7 +4,6 @@ out/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/src/main/resources/static/ServicesPictures/**
 ### STS ###
 .apt_generated
 .classpath
@@ -13,7 +12,8 @@ out/
 .settings
 .springBeans
 .sts4-cache
-
+src/main/resources/static/ServicesPictures/**
+!src/main/resources/static/ServicesPictures/Readme.md
 ### IntelliJ IDEA ###
 .idea
 *.iws
