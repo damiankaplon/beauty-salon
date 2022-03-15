@@ -15,7 +15,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
@@ -33,7 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/index.html");
+                .logoutSuccessUrl("/index.html")
+                .deleteCookies("JSESSIONID")
+                .and()
+                .httpBasic();
     }
 
     @Override
