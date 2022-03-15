@@ -3,7 +3,7 @@ package pl.damiankaplon.beautyspace.treatment;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import pl.damiankaplon.beautyspace.Picture.PictureDto;
+import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import java.util.List;

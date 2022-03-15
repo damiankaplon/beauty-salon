@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.Picture;
+package pl.damiankaplon.beautyspace.picture;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

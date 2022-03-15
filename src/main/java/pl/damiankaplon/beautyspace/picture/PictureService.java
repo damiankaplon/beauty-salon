@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.Picture;
+package pl.damiankaplon.beautyspace.picture;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

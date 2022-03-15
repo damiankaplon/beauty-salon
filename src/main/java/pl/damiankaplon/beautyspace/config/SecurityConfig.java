@@ -30,8 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/treatment/add").hasAuthority("WRITE_PRIVILEGE")
                 .and()
                 .formLogin()
+                .loginPage("/login")
                 .and()
-                .httpBasic();
+                .logout()
+                .logoutSuccessUrl("/index.html");
     }
 
     @Override
