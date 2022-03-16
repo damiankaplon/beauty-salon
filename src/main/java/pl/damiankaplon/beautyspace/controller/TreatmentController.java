@@ -1,6 +1,7 @@
 package pl.damiankaplon.beautyspace.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ class TreatmentController {
 
     private final TreatmentService treatmentService;
     private final PictureService pictureService;
+    private final ModelMapper mapper;
 
     @GetMapping("")
     String getListedServicesPage(Model model) {
@@ -43,6 +45,8 @@ class TreatmentController {
     String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile picture) throws IOException {
 
         PictureDto picDto = pictureService.upload(picture);
+
+
 
         treatmentService.addNewTreatment(form, picDto);
 

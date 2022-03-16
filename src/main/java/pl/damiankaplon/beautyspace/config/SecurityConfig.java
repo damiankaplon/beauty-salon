@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import pl.damiankaplon.beautyspace.account.AccountService;
 
 
 @Configuration
@@ -30,7 +31,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/treatment/add").hasAuthority("WRITE_PRIVILEGE")
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/account/login")
                 .and()
                 .logout()
                 .logoutSuccessUrl("/index.html")
@@ -47,10 +48,5 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return this.userDetailsService;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

@@ -10,7 +10,7 @@
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
   <link rel="stylesheet" th:href="@{/css/btnlinkdisable.css}" href="../static/css/btnlinkdisable.css"/>
   <style>
-    form {
+    .c-form {
       padding: 4em 1em 6em;
     }
     label {
@@ -38,7 +38,7 @@
 <!-- Responsive navbar-->
 <nav th:replace="/common/navbar.html"></nav>
 
-<form action="#" th:action="@{/treatment/add}" th:object="${form}" enctype="multipart/form-data" method="post">
+<form action="#" th:action="@{/treatment/add}" th:object="${form}" enctype="multipart/form-data" method="post" class="c-form">
 <section>
   <div class="form-group">
     <label for="name">Treatment name</label>

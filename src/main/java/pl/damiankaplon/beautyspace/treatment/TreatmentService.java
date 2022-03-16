@@ -20,7 +20,9 @@ public class TreatmentService {
         TreatmentDto dto = mapper.map(form, TreatmentDto.class);
         dto.setPicturePath(picDto.getPathToFile());
 
-        repo.save(Treatment.of(dto));
+        Treatment treatment = Treatment.of(dto);
+
+        repo.save(treatment);
     }
 
     public List<TreatmentDto> getAllTreatments() {
