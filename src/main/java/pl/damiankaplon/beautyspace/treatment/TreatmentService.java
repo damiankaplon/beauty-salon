@@ -17,13 +17,13 @@ public class TreatmentService {
     private final TreatmentRepository repo;
     private final ModelMapper mapper = new TreatmentMapper();
 
-    public void addNewTreatment(TreatmentForm form, PictureDto picDto) {
+    public TreatmentDto addNewTreatment(TreatmentForm form, PictureDto picDto) {
         TreatmentDto dto = mapper.map(form, TreatmentDto.class);
         dto.setPicturePath(picDto.getPathToFile());
 
         Treatment treatment = Treatment.of(dto);
 
-        repo.save(treatment);
+        return mapper.map(repo.save(treatment), TreatmentDto.class);
     }
 
     public List<TreatmentDto> getAllTreatments() {
