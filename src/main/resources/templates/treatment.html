@@ -60,10 +60,20 @@
           </div>
           <div th:if="${dtoPage.totalPages > 0}" class="justify-content-center">
             <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a th:if="${dtoPage.number - 1 >= 0}" th:href="@{/treatment(page=${dtoPage.number})}"
+                   th:text="Prev"
+                   class="page-link"></a>
+              </li>
               <li th:each="pageNumber : ${pageNumbers}"
                   th:class="'page-item'+${pageNumber==(dtoPage.number+1) ? ' active' :''}">
                 <a th:href="@{/treatment(page=${pageNumber})}"
                    th:text="${pageNumber}"
+                   class="page-link"></a>
+              </li>
+              <li class="page-item">
+                <a th:if="${dtoPage.number + 2 <= dtoPage.totalPages}" th:href="@{/treatment(page=${dtoPage.number+2})}"
+                   th:text="Next"
                    class="page-link"></a>
               </li>
             </ul>
