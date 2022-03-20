@@ -15,6 +15,9 @@
       section {
         padding-top: 6em;
       }
+      .album {
+        margin-bottom: 4em;
+      }
     </style>
   </head>
 
@@ -39,11 +42,12 @@
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
-            <div class="col-md-4" th:each="treatment: ${treatments}">
+            <div class="col-md-4" th:each="dto: ${dtoPage.content}">
               <div class="card mb-4 box-shadow">
-                <img class="card-img-top" th:src="@{${treatment.picturePath}}" style="height: 15em; max-width: inherit;" alt="Treatment image">
+                <img class="card-img-top" th:src="@{${dto.picturePath}}" style="height: 15em; max-width: inherit;" alt="Treatment image">
                 <div class="card-body">
-                  <p class="card-text" th:text="*{treatment.shortDescription}"></p>
+                  <p class="card-text" th:text="*{dto.name}"></p>
+                  <p class="card-text" th:text="*{dto.shortDescription}"></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -54,8 +58,19 @@
               </div>
             </div>
           </div>
+          <div th:if="${dtoPage.totalPages > 0}" class="justify-content-center">
+            <ul class="pagination justify-content-center">
+              <li th:each="pageNumber : ${pageNumbers}"
+                  th:class="'page-item'+${pageNumber==(dtoPage.number+1) ? ' active' :''}">
+                <a th:href="@{/treatment(page=${pageNumber})}"
+                   th:text="${pageNumber}"
+                   class="page-link"></a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+
 
       <footer th:replace="/common/footer.html"></footer>
 
