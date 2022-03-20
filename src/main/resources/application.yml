@@ -2,10 +2,10 @@ server:
     port: 9999
 spring:
     datasource:
+        driver-class-name: org.postgresql.Driver
         url: jdbc:postgresql://localhost:5432/beauty-space
         username: postgres
         password: postgres
-        driver-class-name: org.postgresql.Driver
     jpa:
         hibernate:
           ddl-auto: update

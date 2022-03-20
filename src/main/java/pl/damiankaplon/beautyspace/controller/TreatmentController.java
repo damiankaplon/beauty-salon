@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautyspace.Picture.PictureDto;
-import pl.damiankaplon.beautyspace.Picture.PictureService;
+import pl.damiankaplon.beautyspace.picture.PictureDto;
+import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.treatment.TreatmentDto;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
@@ -43,6 +43,8 @@ class TreatmentController {
     String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile picture) throws IOException {
 
         PictureDto picDto = pictureService.upload(picture);
+
+
 
         treatmentService.addNewTreatment(form, picDto);
 

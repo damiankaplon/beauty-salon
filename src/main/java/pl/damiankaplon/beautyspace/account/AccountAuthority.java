@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.user;
+package pl.damiankaplon.beautyspace.account;
 
 import org.springframework.security.core.GrantedAuthority;
 
