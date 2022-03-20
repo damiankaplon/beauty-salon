@@ -6,10 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.picture.PictureService;
@@ -18,8 +15,8 @@ import pl.damiankaplon.beautyspace.treatment.TreatmentDto;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/treatment")
@@ -29,15 +26,8 @@ class TreatmentController {
     private final TreatmentService treatmentService;
     private final PictureService pictureService;
 
-//    @GetMapping("")
-//    String getListedServices(Model model) {
-//        List<TreatmentDto> treatments = treatmentService.getAllTreatments();
-//        model.addAttribute("treatments", treatments);
-//        return "treatment";
-//    }
-
     @GetMapping("")
-    String getListedServicesByPage(Model model, @RequestParam("page")Optional<Integer> page) {
+    public String getPagedTreatments(Model model, @RequestParam("page")Optional<Integer> page) {
         int currentPage = page.orElse(1);
         int pageSize = 6;
         Page<TreatmentDto> dtoPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
@@ -51,15 +41,24 @@ class TreatmentController {
         return "treatment";
     }
 
+    @GetMapping("/{reqUuid}")
+    public String getTreatment(@PathVariable String reqUuid, Model model) {
+        UUID uuid = UUID.fromString(reqUuid);
+        TreatmentDto dto = treatmentService.getTreatment(uuid);
+        model.addAttribute("dto", dto);
+
+        return "treatment-details";
+    }
+
     @GetMapping("/add")
-    String getAddServicePage(Model model) {
+    public String getAddTreatmentPage(Model model) {
         TreatmentForm form = new TreatmentForm();
         model.addAttribute("form", form);
         return "add";
     }
 
     @PostMapping("/add")
-    String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile picture, Model model) throws IOException {
+    public String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile picture, Model model) throws IOException {
         PictureDto picDto = pictureService.upload(picture);
         TreatmentDto added = treatmentService.addNewTreatment(form, picDto);
         model.addAttribute("treatment", added);

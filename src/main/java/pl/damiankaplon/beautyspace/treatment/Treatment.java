@@ -10,13 +10,14 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @Entity
-class Treatment {
+public class Treatment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private UUID uuid;
     private String name;
     private String shortDescription, fullDescription;
+    private Float aproxTime;
     @Embedded
     private PriceRange priceRange;
     @Embedded

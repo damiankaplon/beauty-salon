@@ -12,6 +12,7 @@ import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -59,5 +60,11 @@ public class TreatmentService {
                 .collect(Collectors.toList());
 
         return new PageImpl<>(dtos, PageRequest.of(currPage, pageSize), treatmentsDb.size());
+    }
+
+    public TreatmentDto getTreatment(UUID uuid) {
+        Treatment treatment = repo.findByUuid(uuid);
+        TreatmentDto dto = mapper.map(treatment, TreatmentDto.class);
+        return dto;
     }
 }
