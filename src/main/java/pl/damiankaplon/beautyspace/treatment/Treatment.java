@@ -1,8 +1,10 @@
 package pl.damiankaplon.beautyspace.treatment;
 
 import lombok.*;
+import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -10,13 +12,14 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @Entity
-class Treatment {
+public class Treatment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private UUID uuid;
     private String name;
     private String shortDescription, fullDescription;
+    private LocalTime aproxTime;
     @Embedded
     private PriceRange priceRange;
     @Embedded
@@ -24,14 +27,15 @@ class Treatment {
 
     protected Treatment(){}
 
-    static Treatment of(TreatmentDto dto) {
+    static Treatment of(TreatmentForm form, Picture picture) {
         return Treatment.builder()
                 .uuid(UUID.randomUUID())
-                .name(dto.getName())
-                .priceRange(new PriceRange(Float.valueOf(dto.getMinPrice() + "0"), Float.valueOf(dto.getMaxPrice() + "0")))
-                .shortDescription(dto.getShortDescription())
-                .fullDescription(dto.getFullDescription())
-                .picture(new Picture(dto.getPicturePath()))
+                .name(form.getName())
+                .priceRange(new PriceRange(Float.valueOf(form.getMinPrice() + "0"), Float.valueOf(form.getMaxPrice() + "0")))
+                .shortDescription(form.getShortDescription())
+                .aproxTime(form.getAproxTimeAsLocalTime())
+                .fullDescription(form.getFullDescription())
+                .picture(picture)
                 .build();
     }
 

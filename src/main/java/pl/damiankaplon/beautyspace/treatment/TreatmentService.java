@@ -12,7 +12,7 @@ import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 
 @Service
@@ -20,32 +20,29 @@ import java.util.stream.Collectors;
 public class TreatmentService {
 
     private final TreatmentRepository repo;
-    private final ModelMapper mapper = new TreatmentMapper();
+    private final ModelMapper mapper;
+
     private List<Treatment> treatmentsDb;
 
-    public TreatmentDto addNewTreatment(TreatmentForm form, PictureDto picDto) {
-        TreatmentDto dto = mapper.map(form, TreatmentDto.class);
-        dto.setPicturePath(picDto.getPathToFile());
-
-        Treatment treatment = Treatment.of(dto);
-
-        return mapper.map(repo.save(treatment), TreatmentDto.class);
+    public Treatment addNewTreatment(TreatmentForm form, PictureDto picDto) {
+        Treatment treatment = Treatment.of(form, mapper.map(picDto, Picture.class));
+        return repo.save(treatment);
     }
 
-    public List<TreatmentDto> getAllTreatments() {
+
+    public Page<Treatment> geTreatmentsPage(Pageable pageable) {
         treatmentsDb = repo.findAll();
-        return treatmentsDb.stream()
-                .map(t -> mapper.map(t, TreatmentDto.class))
-                .collect(Collectors.toList());
+        List<Treatment> treatmentsPage = getTreatmentsForPage(pageable);
+        return new PageImpl<>(treatmentsPage, PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize()), treatmentsDb.size());
     }
 
-    public Page<TreatmentDto> geTreatmentsPage(Pageable pageable) {
+    private List<Treatment> getTreatmentsForPage(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currPage = pageable.getPageNumber() - 1;
         int startItem = currPage * pageSize;
+
         List<Treatment> treatmentsPage;
 
-        treatmentsDb = repo.findAll();
         if (treatmentsDb.size() < startItem) {
             treatmentsPage = Collections.emptyList();
         }
@@ -54,10 +51,10 @@ public class TreatmentService {
             treatmentsPage = treatmentsDb.subList(startItem, endIndex);
         }
 
-        List<TreatmentDto> dtos = treatmentsPage.stream()
-                .map(t -> mapper.map(t, TreatmentDto.class))
-                .collect(Collectors.toList());
+        return treatmentsPage;
+    }
 
-        return new PageImpl<>(dtos, PageRequest.of(currPage, pageSize), treatmentsDb.size());
+    public Treatment getTreatment(UUID uuid) {
+        return repo.findByUuid(uuid);
     }
 }

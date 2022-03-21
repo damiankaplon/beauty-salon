@@ -32,6 +32,7 @@
       cursor: pointer;
     }
   </style>
+  <script th:src="@{/js/html-duration-picker.min.js}"></script>
 </head>
 
 <body>
@@ -51,6 +52,12 @@
     <input type="number" th:field="*{minPrice}" class="form-control" id="start-price" placeholder="0.00" />
     <label for="max-price">Maximum price</label>
     <input type="number" th:field="*{maxPrice}" class="form-control" id="max-price" placeholder="100000.00" />
+  </div>
+  <hr>
+  <div class="form-group">
+    <hr>
+    <label for="aprox-time">Approximate time</label>
+    <input th:field="*{aproxTime}" class="form-control html-duration-picker" id="aprox-time" style="text-align: left;" />
   </div>
   <hr>
   <div class="form-group">
