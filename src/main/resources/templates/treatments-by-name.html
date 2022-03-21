@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Offer</title>
+  <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
+  <link rel="stylesheet" th:href="@{/css/btnlinkdisable.css}" href="../static/css/btnlinkdisable.css"/>
+
+  <style>
+    .album {
+      margin-top: 5em;
+      margin-bottom: 4em;
+    }
+    .jumbotron-heading {
+      text-align: center;
+      margin-top: 2em;
+      margin-bottom: 4em;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+<nav th:replace="/common/navbar.html"></nav>
+
+<h1 class="jumbotron-heading" th:if="${dtos.isEmpty()}">Sorry. We will surly supply our offer with your request!</h1>
+
+<div class="album py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" th:each="dto: ${dtos}">
+        <div class="card mb-4 box-shadow">
+
+          <img th:if="${dto.picture != null}" class="card-img-top" th:src="@{${dto.picture.getPathToFile()}}"
+               style="height: 15em; max-width: inherit;" alt="Treatment image" />
+          <img th:if="${dto.picture == null}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
+
+          <div class="card-body">
+            <p class="card-text" th:text="*{dto.name}"></p>
+            <p class="card-text" th:text="*{dto.shortDescription}"></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="@{'/treatment/' + *{dto.uuid}}">View</a></button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="/common/footer.html"></footer>
+
+<script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+</body>
+</html>

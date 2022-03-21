@@ -54,6 +54,10 @@ public class TreatmentService {
         return treatmentsPage;
     }
 
+    public List<Treatment> getAllByName(String name) {
+        return repo.findAllByNameContaining(name);
+    }
+
     public Treatment getTreatment(UUID uuid) {
         return repo.findByUuid(uuid);
     }
