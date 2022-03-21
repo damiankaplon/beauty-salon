@@ -46,7 +46,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
                 <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="@{'/treatment/' + *{dto.uuid}}">View</a></button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <button type="button" sec:authorize="hasAuthority('WRITE_PRIVILEGE')" class="btn btn-sm btn-outline-secondary">Edit</button>
               </div>
             </div>
           </div>
