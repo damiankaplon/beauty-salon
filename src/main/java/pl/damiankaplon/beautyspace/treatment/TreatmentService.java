@@ -33,12 +33,12 @@ public class TreatmentService {
     public Page<Treatment> geTreatmentsPage(Pageable pageable) {
         treatmentsDb = repo.findAll();
         List<Treatment> treatmentsPage = getTreatmentsForPage(pageable);
-        return new PageImpl<>(treatmentsPage, PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize()), treatmentsDb.size());
+        return new PageImpl<>(treatmentsPage, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), treatmentsDb.size());
     }
 
     private List<Treatment> getTreatmentsForPage(Pageable pageable) {
         int pageSize = pageable.getPageSize();
-        int currPage = pageable.getPageNumber() - 1;
+        int currPage = pageable.getPageNumber();
         int startItem = currPage * pageSize;
 
         List<Treatment> treatmentsPage;

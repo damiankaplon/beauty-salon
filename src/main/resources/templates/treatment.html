@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,7 +34,7 @@
           </p>
           <p>
             <a href="#" class="btn btn-primary my-2 border-bottom">Make an appointment</a>
-            <a th:href="@{/treatment/add}" class="btn btn-secondary my-2">Add treatment</a>
+            <a sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:href="@{/treatment/add}" class="btn btn-secondary my-2">Add treatment</a>
           </p>
         </div>
       </section>
@@ -44,8 +44,11 @@
           <div class="row">
             <div class="col-md-4" th:each="dto: ${dtoPage.content}">
               <div class="card mb-4 box-shadow">
+
                 <img th:if="${dto.picture != null}" class="card-img-top" th:src="@{${dto.picture.getPathToFile()}}"
-                     style="height: 15em; max-width: inherit;" alt="Treatment image">
+                     style="height: 15em; max-width: inherit;" alt="Treatment image" />
+                <img th:if="${dto.picture == null}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
+
                 <div class="card-body">
                   <p class="card-text" th:text="*{dto.name}"></p>
                   <p class="card-text" th:text="*{dto.shortDescription}"></p>
@@ -62,18 +65,18 @@
           <div th:if="${dtoPage.totalPages > 0}" class="justify-content-center">
             <ul class="pagination justify-content-center">
               <li class="page-item">
-                <a th:if="${dtoPage.number - 1 >= 0}" th:href="@{/treatment(page=${dtoPage.number})}"
+                <a th:if="${dtoPage.number - 1 >= 0}" th:href="@{/treatment(page=${dtoPage.number - 1})}"
                    th:text="Prev"
                    class="page-link"></a>
               </li>
               <li th:each="pageNumber : ${pageNumbers}"
-                  th:class="'page-item'+${pageNumber==(dtoPage.number+1) ? ' active' :''}">
-                <a th:href="@{/treatment(page=${pageNumber})}"
+                  th:class="'page-item'+${pageNumber==(dtoPage.number + 1) ? ' active' :''}">
+                <a th:href="@{/treatment(page=${pageNumber - 1})}"
                    th:text="${pageNumber}"
                    class="page-link"></a>
               </li>
               <li class="page-item">
-                <a th:if="${dtoPage.number + 2 <= dtoPage.totalPages}" th:href="@{/treatment(page=${dtoPage.number+2})}"
+                <a th:if="${dtoPage.number + 2 <= dtoPage.totalPages}" th:href="@{/treatment(page=${dtoPage.number+1})}"
                    th:text="Next"
                    class="page-link"></a>
               </li>

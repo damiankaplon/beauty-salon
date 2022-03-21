@@ -28,17 +28,20 @@ class TreatmentController {
 
     @GetMapping("")
     public String getPagedTreatments(Model model, @RequestParam("page")Optional<Integer> page) {
-        int currentPage = page.orElse(1);
+        int currentPage = page.orElse(0);
         int pageSize = 6;
         Page<Treatment> treatmentsPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
         model.addAttribute("dtoPage", treatmentsPage);
 
-        int totalPages = treatmentsPage.getTotalPages();
-        if (totalPages > 0) {
-            model.addAttribute("pageNumbers", Interval.oneTo(totalPages));
-        }
+        model.addAttribute("pageNumbers", getNextFivePagesNumbers(currentPage, treatmentsPage.getTotalPages()));
 
         return "treatment";
+    }
+
+    private Interval getNextFivePagesNumbers(int currentPage, int totalPages) {
+        if (totalPages <= 5) return Interval.fromTo(1, totalPages);
+        if (currentPage + 2 >= totalPages) return Interval.fromTo(totalPages - 5, totalPages);
+        else return Interval.fromTo(currentPage - 2, currentPage + 2);
     }
 
     @GetMapping("/{reqUuid}")
