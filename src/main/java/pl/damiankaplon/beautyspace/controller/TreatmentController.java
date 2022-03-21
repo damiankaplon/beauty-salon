@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
-import pl.damiankaplon.beautyspace.treatment.TreatmentDto;
+import pl.damiankaplon.beautyspace.treatment.Treatment;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.io.IOException;
@@ -30,10 +30,10 @@ class TreatmentController {
     public String getPagedTreatments(Model model, @RequestParam("page")Optional<Integer> page) {
         int currentPage = page.orElse(1);
         int pageSize = 6;
-        Page<TreatmentDto> dtoPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
-        model.addAttribute("dtoPage", dtoPage);
+        Page<Treatment> treatmentsPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
+        model.addAttribute("dtoPage", treatmentsPage);
 
-        int totalPages = dtoPage.getTotalPages();
+        int totalPages = treatmentsPage.getTotalPages();
         if (totalPages > 0) {
             model.addAttribute("pageNumbers", Interval.oneTo(totalPages));
         }
@@ -44,7 +44,7 @@ class TreatmentController {
     @GetMapping("/{reqUuid}")
     public String getTreatment(@PathVariable String reqUuid, Model model) {
         UUID uuid = UUID.fromString(reqUuid);
-        TreatmentDto dto = treatmentService.getTreatment(uuid);
+        Treatment dto = treatmentService.getTreatment(uuid);
         model.addAttribute("dto", dto);
 
         return "treatment-details";
@@ -60,7 +60,7 @@ class TreatmentController {
     @PostMapping("/add")
     public String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile picture, Model model) throws IOException {
         PictureDto picDto = pictureService.upload(picture);
-        TreatmentDto added = treatmentService.addNewTreatment(form, picDto);
+        Treatment added = treatmentService.addNewTreatment(form, picDto);
         model.addAttribute("treatment", added);
         return "common/success";
     }

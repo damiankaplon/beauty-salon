@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-class PriceRange {
+public class PriceRange {
     private Float minPrice;
     private Float maxPrice;
 

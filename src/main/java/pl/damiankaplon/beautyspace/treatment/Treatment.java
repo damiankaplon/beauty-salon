@@ -1,7 +1,7 @@
 package pl.damiankaplon.beautyspace.treatment;
 
-import jdk.jfr.Timespan;
 import lombok.*;
+import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -27,15 +27,15 @@ public class Treatment {
 
     protected Treatment(){}
 
-    static Treatment of(TreatmentDto dto) {
+    static Treatment of(TreatmentForm form, Picture picture) {
         return Treatment.builder()
                 .uuid(UUID.randomUUID())
-                .name(dto.getName())
-                .priceRange(new PriceRange(Float.valueOf(dto.getMinPrice() + "0"), Float.valueOf(dto.getMaxPrice() + "0")))
-                .shortDescription(dto.getShortDescription())
-                .aproxTime(dto.getAproxTime())
-                .fullDescription(dto.getFullDescription())
-                .picture(new Picture(dto.getPicturePath()))
+                .name(form.getName())
+                .priceRange(new PriceRange(Float.valueOf(form.getMinPrice() + "0"), Float.valueOf(form.getMaxPrice() + "0")))
+                .shortDescription(form.getShortDescription())
+                .aproxTime(form.getAproxTimeAsLocalTime())
+                .fullDescription(form.getFullDescription())
+                .picture(picture)
                 .build();
     }
 

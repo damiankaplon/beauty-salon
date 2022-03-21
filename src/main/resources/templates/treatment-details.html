@@ -41,11 +41,11 @@
                 </p>
                 <p>
                     <b>Price from:</b>
-                    <span th:text="*{dto.minPrice}" th:remove="tag">price</span>
+                    <span th:text="*{dto.priceRange.getMinPrice()}" th:remove="tag">price</span>
                 </p>
                 <p>
                     <b>Price to:</b>
-                    <span th:text="*{dto.maxPrice}" th:remove="tag">price</span>
+                    <span th:text="*{dto.priceRange.getMaxPrice()}" th:remove="tag">price</span>
                 </p>
             </div><!-- / project-info-box -->
 
@@ -58,7 +58,7 @@
         </div><!-- / column -->
 
         <div class="col-md-7">
-            <img th:src="@{${dto.picturePath}}" alt="image" class="rounded">
+            <img th:src="@{${dto.picture.getPathToFile()}}" alt="image" class="rounded">
             <div class="project-info-box">
                 <p><b>Categories:</b> Face</p>
             </div><!-- / project-info-box -->

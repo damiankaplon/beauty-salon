@@ -13,7 +13,6 @@ import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -21,28 +20,20 @@ import java.util.stream.Collectors;
 public class TreatmentService {
 
     private final TreatmentRepository repo;
-    private final ModelMapper mapper = new TreatmentMapper();
+    private final ModelMapper mapper;
+
     private List<Treatment> treatmentsDb;
 
-    public TreatmentDto addNewTreatment(TreatmentForm form, PictureDto picDto) {
-        TreatmentDto dto = mapper.map(form, TreatmentDto.class);
-        dto.setPicturePath(picDto.getPathToFile());
-
-        Treatment treatment = Treatment.of(dto);
-
-        return mapper.map(repo.save(treatment), TreatmentDto.class);
+    public Treatment addNewTreatment(TreatmentForm form, PictureDto picDto) {
+        Treatment treatment = Treatment.of(form, mapper.map(picDto, Picture.class));
+        return repo.save(treatment);
     }
 
 
-    public Page<TreatmentDto> geTreatmentsPage(Pageable pageable) {
+    public Page<Treatment> geTreatmentsPage(Pageable pageable) {
         treatmentsDb = repo.findAll();
         List<Treatment> treatmentsPage = getTreatmentsForPage(pageable);
-
-        List<TreatmentDto> dtos = treatmentsPage.stream()
-                .map(t -> mapper.map(t, TreatmentDto.class))
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(dtos, PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize()), treatmentsDb.size());
+        return new PageImpl<>(treatmentsPage, PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize()), treatmentsDb.size());
     }
 
     private List<Treatment> getTreatmentsForPage(Pageable pageable) {
@@ -63,8 +54,7 @@ public class TreatmentService {
         return treatmentsPage;
     }
 
-    public TreatmentDto getTreatment(UUID uuid) {
-        Treatment treatment = repo.findByUuid(uuid);
-        return mapper.map(treatment, TreatmentDto.class);
+    public Treatment getTreatment(UUID uuid) {
+        return repo.findByUuid(uuid);
     }
 }
