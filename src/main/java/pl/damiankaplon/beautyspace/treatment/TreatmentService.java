@@ -33,20 +33,25 @@ public class TreatmentService {
         return mapper.map(repo.save(treatment), TreatmentDto.class);
     }
 
-    public List<TreatmentDto> getAllTreatments() {
-        treatmentsDb = repo.findAll();
-        return treatmentsDb.stream()
-                .map(t -> mapper.map(t, TreatmentDto.class))
-                .collect(Collectors.toList());
-    }
 
     public Page<TreatmentDto> geTreatmentsPage(Pageable pageable) {
+        treatmentsDb = repo.findAll();
+        List<Treatment> treatmentsPage = getTreatmentsForPage(pageable);
+
+        List<TreatmentDto> dtos = treatmentsPage.stream()
+                .map(t -> mapper.map(t, TreatmentDto.class))
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(dtos, PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize()), treatmentsDb.size());
+    }
+
+    private List<Treatment> getTreatmentsForPage(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int currPage = pageable.getPageNumber() - 1;
         int startItem = currPage * pageSize;
+
         List<Treatment> treatmentsPage;
 
-        treatmentsDb = repo.findAll();
         if (treatmentsDb.size() < startItem) {
             treatmentsPage = Collections.emptyList();
         }
@@ -55,16 +60,11 @@ public class TreatmentService {
             treatmentsPage = treatmentsDb.subList(startItem, endIndex);
         }
 
-        List<TreatmentDto> dtos = treatmentsPage.stream()
-                .map(t -> mapper.map(t, TreatmentDto.class))
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(dtos, PageRequest.of(currPage, pageSize), treatmentsDb.size());
+        return treatmentsPage;
     }
 
     public TreatmentDto getTreatment(UUID uuid) {
         Treatment treatment = repo.findByUuid(uuid);
-        TreatmentDto dto = mapper.map(treatment, TreatmentDto.class);
-        return dto;
+        return mapper.map(treatment, TreatmentDto.class);
     }
 }

@@ -1,8 +1,10 @@
 package pl.damiankaplon.beautyspace.treatment;
 
+import jdk.jfr.Timespan;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -17,7 +19,7 @@ public class Treatment {
     private UUID uuid;
     private String name;
     private String shortDescription, fullDescription;
-    private Float aproxTime;
+    private LocalTime aproxTime;
     @Embedded
     private PriceRange priceRange;
     @Embedded
@@ -31,6 +33,7 @@ public class Treatment {
                 .name(dto.getName())
                 .priceRange(new PriceRange(Float.valueOf(dto.getMinPrice() + "0"), Float.valueOf(dto.getMaxPrice() + "0")))
                 .shortDescription(dto.getShortDescription())
+                .aproxTime(dto.getAproxTime())
                 .fullDescription(dto.getFullDescription())
                 .picture(new Picture(dto.getPicturePath()))
                 .build();
