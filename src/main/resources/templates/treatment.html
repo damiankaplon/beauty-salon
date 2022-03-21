@@ -36,6 +36,10 @@
             <a href="#" class="btn btn-primary my-2 border-bottom">Make an appointment</a>
             <a sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:href="@{/treatment/add}" class="btn btn-secondary my-2">Add treatment</a>
           </p>
+          <p class="input-group">
+            <input type="search" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
+            <button type="button" id="search-btn" class="btn btn-outline-primary">search</button>
+          </p>
         </div>
       </section>
 
@@ -89,5 +93,12 @@
       <footer th:replace="/common/footer.html"></footer>
 
     <script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+    <script>
+      document.getElementById("search-btn").addEventListener("click", redirect);
+      function redirect() {
+        var searched = document.getElementById("search-input").value;
+        location.replace("/treatment/" + searched);
+      }
+    </script>
   </body>
 </html>

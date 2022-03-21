@@ -15,6 +15,7 @@ import pl.damiankaplon.beautyspace.treatment.Treatment;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,13 +45,23 @@ class TreatmentController {
         else return Interval.fromTo(currentPage - 2, currentPage + 2);
     }
 
-    @GetMapping("/{reqUuid}")
-    public String getTreatment(@PathVariable String reqUuid, Model model) {
-        UUID uuid = UUID.fromString(reqUuid);
-        Treatment dto = treatmentService.getTreatment(uuid);
-        model.addAttribute("dto", dto);
+    @GetMapping("/{uuidOrName}")
+    public String getTreatment(@PathVariable String uuidOrName, Model model) {
+        return responseBaseOnAttribute(uuidOrName, model);
+    }
 
-        return "treatment-details";
+    private String responseBaseOnAttribute(String reqUuidOrName, Model model) {
+        try {
+            UUID uuid = UUID.fromString(reqUuidOrName);
+            Treatment dto = treatmentService.getTreatment(uuid);
+            model.addAttribute("dto", dto);
+            return "treatment-details";
+
+        } catch (IllegalArgumentException ex) {
+            List<Treatment> dtos = treatmentService.getAllByName(reqUuidOrName);
+            model.addAttribute("dtos", dtos);
+            return "treatments-by-name";
+        }
     }
 
     @GetMapping("/add")
