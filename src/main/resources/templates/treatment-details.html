@@ -58,7 +58,7 @@
         </div><!-- / column -->
 
         <div class="col-md-7">
-            <img th:src="@{${dto.picture.getPathToFile()}}" alt="image" class="rounded">
+            <img th:if="${dto.picture != null}" th:src="@{${dto.picture.getPathToFile()}}" alt="image" class="rounded">
             <div class="project-info-box">
                 <p><b>Categories:</b> Face</p>
             </div><!-- / project-info-box -->
