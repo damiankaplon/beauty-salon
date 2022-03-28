@@ -58,14 +58,14 @@ public class TreatmentController {
     public String getTreatmentsByName(@PathVariable String name, Model model) {
         List<Treatment> dtos = treatmentService.getAllByName(name);
         model.addAttribute("dtos", dtos);
-        return "treatments-by-name";
+        return "treatments-container";
     }
 
     @GetMapping("/type/{type}")
     public String getTreatmentsByType(@PathVariable String type, Model model) {
         List<Treatment> dtos = treatmentService.getAllByType(TreatmentBodyPart.valueOf(type));
         model.addAttribute("dtos", dtos);
-        return "treatments-by-name";
+        return "treatments-container";
     }
 
     @GetMapping("/add")
