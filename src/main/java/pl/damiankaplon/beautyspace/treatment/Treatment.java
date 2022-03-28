@@ -1,6 +1,7 @@
 package pl.damiankaplon.beautyspace.treatment;
 
 import com.google.common.collect.Lists;
+import jdk.jfr.Timespan;
 import lombok.*;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
@@ -26,7 +27,9 @@ public class Treatment {
     private LocalTime aproxTime;
     @Embedded
     private PriceRange priceRange;
-
+    @ElementCollection(targetClass = TreatmentBodyPart.class)
+    @Enumerated(EnumType.STRING)
+    private List<TreatmentBodyPart> bodyParts;
     @ElementCollection(targetClass = Picture.class)
     @Enumerated(EnumType.STRING)
     private List<Picture> pictures;

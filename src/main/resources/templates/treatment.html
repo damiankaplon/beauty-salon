@@ -58,7 +58,7 @@
                   <p class="card-text" th:text="*{dto.shortDescription}"></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="@{'/treatment/' + *{dto.uuid}}">View</a></button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="@{'/treatment/uuid/' + *{dto.uuid}}">View</a></button>
                       <button type="button" sec:authorize="hasAuthority('WRITE_PRIVILEGE')" class="btn btn-sm btn-outline-secondary">Edit</button>
                     </div>
                   </div>
@@ -97,7 +97,7 @@
       document.getElementById("search-btn").addEventListener("click", redirect);
       function redirect() {
         var searched = document.getElementById("search-input").value;
-        location.replace("/treatment/" + searched);
+        location.replace("/treatment/name/" + searched);
       }
     </script>
   </body>

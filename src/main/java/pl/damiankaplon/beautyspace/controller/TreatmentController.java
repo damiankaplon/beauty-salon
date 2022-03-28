@@ -12,6 +12,7 @@ import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.treatment.Treatment;
+import pl.damiankaplon.beautyspace.treatment.TreatmentBodyPart;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ class TreatmentController {
         int pageSize = 6;
         Page<Treatment> treatmentsPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
         model.addAttribute("dtoPage", treatmentsPage);
-
+        model.addAttribute("types", TreatmentBodyPart.values());
         model.addAttribute("pageNumbers", getNextFivePagesNumbers(currentPage, treatmentsPage.getTotalPages()));
 
         return "treatment";
@@ -45,23 +46,19 @@ class TreatmentController {
         else return Interval.fromTo(currentPage - 2, currentPage + 2);
     }
 
-    @GetMapping("/{uuidOrName}")
-    public String getTreatment(@PathVariable String uuidOrName, Model model) {
-        return responseBaseOnAttribute(uuidOrName, model);
+    @GetMapping("/uuid/{uuid}")
+    public String getTreatmentDetails(@PathVariable String uuid, Model model) {
+        UUID reqUuid = UUID.fromString(uuid);
+        Treatment dto = treatmentService.getTreatment(reqUuid);
+        model.addAttribute("dto", dto);
+        return "treatment-details";
     }
 
-    private String responseBaseOnAttribute(String reqUuidOrName, Model model) {
-        try {
-            UUID uuid = UUID.fromString(reqUuidOrName);
-            Treatment dto = treatmentService.getTreatment(uuid);
-            model.addAttribute("dto", dto);
-            return "treatment-details";
-
-        } catch (IllegalArgumentException ex) {
-            List<Treatment> dtos = treatmentService.getAllByName(reqUuidOrName);
-            model.addAttribute("dtos", dtos);
-            return "treatments-by-name";
-        }
+    @GetMapping("/name/{name}")
+    public String getTreatmentsByName(@PathVariable String name, Model model) {
+        List<Treatment> dtos = treatmentService.getAllByName(name);
+        model.addAttribute("dtos", dtos);
+        return "treatments-by-name";
     }
 
     @GetMapping("/add")
