@@ -1,5 +1,6 @@
 package pl.damiankaplon.beautyspace.unit;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class TreatmentServiceTests {
                 .fullDescription("test")
                 .shortDescription("test")
                 .name("test")
-                .picture(new Picture())
+                .pictures(Lists.newArrayList(new Picture()))
                 .priceRange(new PriceRange(100.0f, 500.0f))
                 .id(1)
                 .build();

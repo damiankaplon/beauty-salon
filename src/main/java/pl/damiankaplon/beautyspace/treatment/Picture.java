@@ -4,8 +4,8 @@ import lombok.Data;
 
 import javax.persistence.Embeddable;
 
-@Embeddable
 @Data
+@Embeddable
 public class Picture {
     private String pathToFile;
 }

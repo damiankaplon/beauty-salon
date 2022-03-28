@@ -36,9 +36,9 @@
       <div class="col-md-4" th:each="dto: ${dtos}">
         <div class="card mb-4 box-shadow">
 
-          <img th:if="${dto.picture != null}" class="card-img-top" th:src="@{${dto.picture.getPathToFile()}}"
+          <img th:if="${dto.pictures.size() > 0}" class="card-img-top" th:src="@{${dto.pictures.get(0).getPathToFile()}}"
                style="height: 15em; max-width: inherit;" alt="Treatment image" />
-          <img th:if="${dto.picture == null}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
+          <img th:if="${dto.pictures.size() == 0}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
 
           <div class="card-body">
             <p class="card-text" th:text="*{dto.name}"></p>

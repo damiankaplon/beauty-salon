@@ -16,6 +16,9 @@
             padding-top: 5em;
             padding-bottom: 5em;
         }
+        img {
+            padding-bottom: 1em;
+        }
     </style>
 </head>
 
@@ -58,10 +61,12 @@
         </div><!-- / column -->
 
         <div class="col-md-7">
-            <img th:if="${dto.picture != null}" th:src="@{${dto.picture.getPathToFile()}}" alt="image" class="rounded">
+            <img th:each="pic: ${dto.pictures}"
+                 th:if="${pic != null}"
+                 th:src="@{${pic.getPathToFile()}}" alt="image" class="rounded"><!-- / project-info-box -->
             <div class="project-info-box">
                 <p><b>Categories:</b> Face</p>
-            </div><!-- / project-info-box -->
+            </div>
         </div><!-- / column -->
     </div>
 </div>
