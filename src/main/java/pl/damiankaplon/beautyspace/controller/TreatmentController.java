@@ -23,7 +23,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/treatment")
 @RequiredArgsConstructor
-class TreatmentController {
+public class TreatmentController {
 
     private final TreatmentService treatmentService;
     private final PictureService pictureService;
