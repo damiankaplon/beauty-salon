@@ -61,4 +61,8 @@ public class TreatmentService {
     public Treatment getTreatment(UUID uuid) {
         return repo.findByUuid(uuid);
     }
+
+    public List<Treatment> getAllByType(TreatmentBodyPart type) {
+        return repo.findAllByBodyPartsContains(type);
+    }
 }

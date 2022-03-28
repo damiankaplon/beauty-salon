@@ -12,4 +12,5 @@ public interface TreatmentRepository extends JpaRepository<Treatment, Integer> {
     Treatment findByUuid(UUID uuid);
 
     List<Treatment> findAllByNameContaining(String name);
+    List<Treatment> findAllByBodyPartsContains(TreatmentBodyPart type);
 }

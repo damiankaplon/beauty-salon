@@ -61,6 +61,13 @@ public class TreatmentController {
         return "treatments-by-name";
     }
 
+    @GetMapping("/type/{type}")
+    public String getTreatmentsByType(@PathVariable String type, Model model) {
+        List<Treatment> dtos = treatmentService.getAllByType(TreatmentBodyPart.valueOf(type));
+        model.addAttribute("dtos", dtos);
+        return "treatments-by-name";
+    }
+
     @GetMapping("/add")
     public String getAddTreatmentPage(Model model) {
         TreatmentForm form = new TreatmentForm();
