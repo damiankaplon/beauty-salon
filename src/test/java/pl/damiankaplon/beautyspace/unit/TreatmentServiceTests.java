@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.treatment.*;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -43,7 +45,7 @@ public class TreatmentServiceTests {
                 .priceRange(new PriceRange(100.0f, 500.0f))
                 .id(1)
                 .build();
-        when(treatmentRepository.save(any(Treatment.class))).thenReturn(shouldBeReturned);
+        when(treatmentRepository.save(any(Treatment.class))).then(AdditionalAnswers.returnsFirstArg());
 
         TreatmentForm testForm = new TreatmentForm();
         testForm.setName("test");
@@ -54,12 +56,12 @@ public class TreatmentServiceTests {
         testForm.setMaxPrice("500.0");
         PictureDto pictureDto = new PictureDto("test");
         //WHEN
-        Treatment underTesting = treatmentService.addNewTreatment(testForm, pictureDto);
+        Treatment underTesting = treatmentService.addNewTreatment(testForm, List.of(pictureDto));
         //THEN
         assertTreatmentsProperties(underTesting, shouldBeReturned);
     }
 
-    private void assertTreatmentsProperties(Treatment underTest, Treatment proper) {
+    private static void assertTreatmentsProperties(Treatment underTest, Treatment proper) {
         Assertions.assertAll(() -> {
             Assertions.assertEquals(underTest.getAproxTime().toString(), proper.getAproxTime().toString());
             Assertions.assertEquals(underTest.getFullDescription(), proper.getFullDescription());

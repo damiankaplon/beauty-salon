@@ -36,11 +36,11 @@ public class Treatment {
 
     protected Treatment(){}
 
-    static Treatment of(TreatmentForm form, Picture picture) {
+    static Treatment of(TreatmentForm form, List<Picture> picture) {
         return Treatment.builder()
                 .uuid(UUID.randomUUID())
                 .name(form.getName())
-                .priceRange(new PriceRange(Float.valueOf(form.getMinPrice() + "0"), Float.valueOf(form.getMaxPrice() + "0")))
+                .priceRange(new PriceRange(Float.valueOf(form.getMinPrice()), Float.valueOf(form.getMaxPrice())))
                 .shortDescription(form.getShortDescription())
                 .aproxTime(form.getAproxTimeAsLocalTime())
                 .fullDescription(form.getFullDescription())

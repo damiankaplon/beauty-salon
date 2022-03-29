@@ -13,6 +13,7 @@ import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,8 +25,11 @@ public class TreatmentService {
 
     private List<Treatment> treatmentsDb;
 
-    public Treatment addNewTreatment(TreatmentForm form, PictureDto picDto) {
-        Treatment treatment = Treatment.of(form, mapper.map(picDto, Picture.class));
+    public Treatment addNewTreatment(TreatmentForm form, List<PictureDto> picDto) {
+        List<Picture> pics = picDto.stream()
+                .map(pictureDto -> mapper.map(pictureDto, Picture.class))
+                .collect(Collectors.toList());
+        Treatment treatment = Treatment.of(form, pics);
         return repo.save(treatment);
     }
 

@@ -1,5 +1,6 @@
 package pl.damiankaplon.beautyspace.controller;
 
+import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.collections.impl.list.Interval;
 import org.springframework.data.domain.Page;
@@ -76,8 +77,8 @@ public class TreatmentController {
     }
 
     @PostMapping("/add")
-    public String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile picture, Model model) throws IOException {
-        PictureDto picDto = pictureService.upload(picture);
+    public String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile[] pictures, Model model) throws IOException {
+        List<PictureDto> picDto = pictureService.upload(Lists.newArrayList(pictures));
         Treatment added = treatmentService.addNewTreatment(form, picDto);
         model.addAttribute("treatment", added);
         return "common/success";
