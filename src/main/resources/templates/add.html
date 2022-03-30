@@ -43,7 +43,7 @@
 <section>
   <div class="form-group">
     <label for="name">Treatment name</label>
-    <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Treatment name" />
+    <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Treatment name" maxlength="100" />
   </div>
   <hr>
   <div class="form-group">
@@ -63,9 +63,9 @@
   <div class="form-group">
     <hr>
     <label for="s-description">Short description</label>
-    <textarea rows="2" th:field="*{shortDescription}" class="form-control" id="s-description"> </textarea>
+    <textarea rows="2" th:field="*{shortDescription}" class="form-control" id="s-description" maxlength="300"> </textarea>
     <label for="v-description">Verbose description</label>
-    <textarea rows="4" th:field="*{fullDescription}" class="form-control" id="v-description"> </textarea>
+    <textarea rows="4" th:field="*{fullDescription}" class="form-control" id="v-description" maxlength="2048"> </textarea>
   </div>
   <hr>
   <label for="pic" class="custom-file">
