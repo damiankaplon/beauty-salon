@@ -36,10 +36,18 @@
             <a href="#" class="btn btn-primary my-2 border-bottom">Make an appointment</a>
             <a sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:href="@{/treatment/add}" class="btn btn-secondary my-2">Add treatment</a>
           </p>
-          <p class="input-group">
-            <input type="search" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
-            <button type="button" id="search-btn" class="btn btn-outline-primary">search</button>
-          </p>
+          <form action="#" th:action="@{/treatment/search}" method="post" th:object="${searchForm}" class="input-group">
+
+              <select th:field="*{chosenType}" class="btn btn-outline-primary" style="border-radius: 0.2em">
+                <option value="" selected="selected" disabled hidden>Choose type</option>
+                <option th:each="type : ${types}"
+                      th:value="${type.getBodyPartName()}"
+                      th:text="${type.getBodyPartName()}"></option>
+              </select>
+
+            <input type="text" th:field="*{name}" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
+            <button type="submit" id="search-btn" class="btn btn-outline-primary">search</button>
+          </form>
         </div>
       </section>
 

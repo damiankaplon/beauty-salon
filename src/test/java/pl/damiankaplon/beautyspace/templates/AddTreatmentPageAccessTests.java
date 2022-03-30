@@ -22,6 +22,7 @@ import pl.damiankaplon.beautyspace.controller.AccountController;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.treatment.Treatment;
+import pl.damiankaplon.beautyspace.treatment.TreatmentType;
 import pl.damiankaplon.beautyspace.treatment.TreatmentRepository;
 
 import java.lang.reflect.Field;
@@ -72,6 +73,7 @@ public class AddTreatmentPageAccessTests {
         form.add("aproxTime", "00:10:00");
         form.add("minPrice", "100.0");
         form.add("maxPrice", "1000.0");
+        form.add("type", "Face");
         assertFormContainsAllTreatmentFormFields(form);
 
         MockMultipartFile pic1 = new MockMultipartFile("pic", "test1.jpg", ".jpg", "pic1".getBytes());
@@ -99,6 +101,10 @@ public class AddTreatmentPageAccessTests {
                                 treatment.getName().equals(form.get("name").get(0)) &&
                                 treatment.getShortDescription().equals(form.get("shortDescription").get(0)) &&
                                 treatment.getFullDescription().equals(form.get("fullDescription").get(0)) &&
+                                form.get("type").containsAll(treatment.getTypes()
+                                        .stream()
+                                        .map(TreatmentType::getBodyPartName)
+                                        .collect(Collectors.toList())) &&
                                 treatment.getPictures().size() == pics.length;
                     }
 

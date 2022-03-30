@@ -9,11 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.damiankaplon.beautyspace.controller.form.SearchForm;
 import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.treatment.Treatment;
-import pl.damiankaplon.beautyspace.treatment.TreatmentBodyPart;
+import pl.damiankaplon.beautyspace.treatment.TreatmentType;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.io.IOException;
@@ -35,7 +36,8 @@ public class TreatmentController {
         int pageSize = 6;
         Page<Treatment> treatmentsPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
         model.addAttribute("dtoPage", treatmentsPage);
-        model.addAttribute("types", TreatmentBodyPart.values());
+        model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("types", List.of(TreatmentType.values()));
         model.addAttribute("pageNumbers", getNextFivePagesNumbers(currentPage, treatmentsPage.getTotalPages()));
 
         return "treatment";
@@ -55,24 +57,19 @@ public class TreatmentController {
         return "treatment-details";
     }
 
-    @GetMapping("/name/{name}")
-    public String getTreatmentsByName(@PathVariable String name, Model model) {
-        List<Treatment> dtos = treatmentService.getAllByName(name);
+    @PostMapping("/search")
+    public String getTreatmentsByName(SearchForm form, Model model) {
+        List<Treatment> dtos = treatmentService.getAllByNameAndType(form.getName(), form.getChosenType());
         model.addAttribute("dtos", dtos);
         return "treatments-container";
     }
 
-    @GetMapping("/type/{type}")
-    public String getTreatmentsByType(@PathVariable String type, Model model) {
-        List<Treatment> dtos = treatmentService.getAllByType(TreatmentBodyPart.valueOf(type));
-        model.addAttribute("dtos", dtos);
-        return "treatments-container";
-    }
 
     @GetMapping("/add")
     public String getAddTreatmentPage(Model model) {
         TreatmentForm form = new TreatmentForm();
         model.addAttribute("form", form);
+        model.addAttribute("types", List.of(TreatmentType.values()));
         return "add";
     }
 

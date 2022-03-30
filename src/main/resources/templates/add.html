@@ -46,6 +46,13 @@
     <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Treatment name" maxlength="100" />
   </div>
   <hr>
+  <label for="type">Type</label>
+  <select th:field="*{chosenTypes}" class="btn btn-outline-primary" id="type" style="border-radius: 0.2em; width: 100%">
+    <option value="" selected="selected" disabled hidden>Choose type</option>
+    <option th:each="type : ${types}"
+            th:value="${type.getBodyPartName()}"
+            th:text="${type.getBodyPartName()}"></option>
+  </select>
   <div class="form-group">
     <hr>
     <label for="start-price">Starting price</label>

@@ -17,7 +17,7 @@ import pl.damiankaplon.beautyspace.controller.AccountController;
 import pl.damiankaplon.beautyspace.controller.TreatmentController;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.treatment.Treatment;
-import pl.damiankaplon.beautyspace.treatment.TreatmentBodyPart;
+import pl.damiankaplon.beautyspace.treatment.TreatmentType;
 import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
 import java.util.List;
@@ -143,8 +143,8 @@ public class TreatmentPageTests {
                 .andExpect(MockMvcResultMatchers.model().attribute("types", new BaseMatcher<>() {
                     @Override
                     public boolean matches(Object actual) {
-                        TreatmentBodyPart[] types = (TreatmentBodyPart[]) actual;
-                        List<TreatmentBodyPart> treatmentBodyPartList = Lists.newArrayList(TreatmentBodyPart.values());
+                        TreatmentType[] types = (TreatmentType[]) actual;
+                        List<TreatmentType> treatmentBodyPartList = Lists.newArrayList(TreatmentType.values());
                         return List.of(types).containsAll(treatmentBodyPartList);
                     }
 

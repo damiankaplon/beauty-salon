@@ -66,7 +66,16 @@ public class TreatmentService {
         return repo.findByUuid(uuid);
     }
 
-    public List<Treatment> getAllByType(TreatmentBodyPart type) {
-        return repo.findAllByBodyPartsContains(type);
+    public List<Treatment> getAllByType(TreatmentType type) {
+        return repo.findAllByTypesContains(type);
+    }
+
+    public List<Treatment> getAllByNameAndType(String name, String type) {
+        TreatmentType treatmentType = TreatmentType.fromString(type);
+        if (name == null || name.isBlank()) return this.getAllByType(treatmentType);
+        else if (type == null || type.isBlank()) return this.getAllByName(name);
+        else {
+            return repo.findAllByNameContainingAndTypesContaining(name, treatmentType);
+        }
     }
 }

@@ -1,16 +1,14 @@
 package pl.damiankaplon.beautyspace.treatment;
 
 import com.google.common.collect.Lists;
-import jdk.jfr.Timespan;
 import lombok.*;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,9 +25,9 @@ public class Treatment {
     private LocalTime aproxTime;
     @Embedded
     private PriceRange priceRange;
-    @ElementCollection(targetClass = TreatmentBodyPart.class)
+    @ElementCollection(targetClass = TreatmentType.class)
     @Enumerated(EnumType.STRING)
-    private List<TreatmentBodyPart> bodyParts;
+    private List<TreatmentType> types;
     @ElementCollection(targetClass = Picture.class)
     @Enumerated(EnumType.STRING)
     private List<Picture> pictures;
@@ -45,6 +43,11 @@ public class Treatment {
                 .aproxTime(form.getAproxTimeAsLocalTime())
                 .fullDescription(form.getFullDescription())
                 .pictures(Lists.newArrayList(picture))
+                .types(
+                        form.getChosenTypes().stream()
+                                .map(TreatmentType::fromString)
+                                .collect(Collectors.toList())
+                )
                 .build();
     }
 

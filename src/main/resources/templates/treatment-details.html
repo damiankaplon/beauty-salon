@@ -65,7 +65,7 @@
                  th:if="${pic != null}"
                  th:src="@{${pic.getPathToFile()}}" alt="image" class="rounded"><!-- / project-info-box -->
             <div class="project-info-box">
-                <p><b>Categories:</b> Face</p>
+                <p><b>Categories:</b> <span th:each="type : ${dto.getTypes()}" th:text="${type.getBodyPartName()}"></span></p>
             </div>
         </div><!-- / column -->
     </div>
