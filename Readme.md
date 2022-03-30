@@ -1,10 +1,21 @@
-Website for beauty salon which is basicly nad introduction of the salon. Allows admin to add treatment to the offer. Allows users make an appointment.
+Website for beauty salon. Which allows basic operations for owners(administrators) and clients
 ---
 Main points of the app:
-- allow users to check on the actual offer,
-- allow users to set the date of an appointment,
-- allow administrator to change the offer by:
-  - Adding service or deleting it,
-  - Setting details info (for instance description, price), 
-  - Setting the picture.
+- be an information website for clients,
+- allow users to:
+    - check on the actual offer,
+    - search through actual offer by:
+      - typing in treatment/service name,
+      - by treatment type or body part (e.g. face, body | surgical, cosmetic).
+    - register account,
+    - log in.
+- allow administrator to:
+  - add new treatment to the offer by setting its:
+    - name,
+    - pictures,
+    - descriptions,
+    - price,
+    - approximate time.
+  - delete actual treatment, 
+  - editing actual treatment.
 ---
