@@ -41,7 +41,7 @@ public class TreatmentPageTests {
     @Test
     public void shouldReturnEmptyTemplateWithNoTreatments() throws Exception {
        //GIVEN
-        Page<Treatment> treatmentPage = new TreatmentsPageStub();
+        Page<Treatment> treatmentPage = new CustomStubs.StubTreatmentsPage();
         when(treatmentService.geTreatmentsPage(PageRequest.of(0, 6)))
                 .thenReturn(treatmentPage);
         //WHEN & THEN
@@ -66,7 +66,7 @@ public class TreatmentPageTests {
 
     @Test
     public void shouldContain5Pages() throws Exception {
-        class SixPagesStub extends TreatmentsPageStub {
+        class SixPagesStub extends CustomStubs.StubTreatmentsPage {
             @Override
             public int getTotalPages() {
                 return 5;
@@ -96,7 +96,7 @@ public class TreatmentPageTests {
 
     @Test
     public void shouldContain2Pages() throws Exception {
-        class TwoPagesStub extends TreatmentsPageStub {
+        class TwoPagesStub extends CustomStubs.StubTreatmentsPage {
             @Override
             public int getTotalPages() {
                 return 2;
@@ -126,7 +126,7 @@ public class TreatmentPageTests {
 
     @Test
     public void shouldContainAllBodyTypesInModel() throws Exception {
-        class TwoPagesStub extends TreatmentsPageStub {
+        class TwoPagesStub extends CustomStubs.StubTreatmentsPage {
             @Override
             public int getTotalPages() {
                 return 2;

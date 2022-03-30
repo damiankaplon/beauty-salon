@@ -1,6 +1,7 @@
 package pl.damiankaplon.beautyspace.templates;
 
 import com.google.common.collect.Lists;
+import org.assertj.core.api.Assertions;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.jupiter.api.Test;
@@ -8,11 +9,10 @@ import org.mockito.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -21,22 +21,19 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import pl.damiankaplon.beautyspace.controller.AccountController;
-import pl.damiankaplon.beautyspace.controller.TreatmentController;
-import pl.damiankaplon.beautyspace.picture.PictureDto;
+import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.treatment.Treatment;
 import pl.damiankaplon.beautyspace.treatment.TreatmentRepository;
-import pl.damiankaplon.beautyspace.treatment.TreatmentService;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -69,6 +66,7 @@ public class AddTreatmentPageAccessTests {
     @Test
     @WithMockUser(authorities = {"WRITE_PRIVILEGE"})
     public void shouldSuccessfullyAddPicture() throws Exception {
+        //GIVEN
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
         form.add("name", "test");
         form.add("shortDescription", "test");
@@ -76,16 +74,18 @@ public class AddTreatmentPageAccessTests {
         form.add("aproxTime", "00:10:00");
         form.add("minPrice", "100.0");
         form.add("maxPrice", "1000.0");
+        assertFormContainsAllTreatmentFormFields(form);
 
         MockMultipartFile pic1 = new MockMultipartFile("pic", "test1.jpg", ".jpg", "pic1".getBytes());
         MockMultipartFile pic2 = new MockMultipartFile("pic", "test2.jpg", ".jpg", "pic2".getBytes());
         MultipartFile[] pics = new MultipartFile[]{pic1, pic2};
 
         when(pictureService.upload(ArgumentMatchers.anyList()))
-                .thenReturn(stubPictureServiceUploadMethod(Lists.newArrayList(pics)));
+                .thenReturn(CustomStubs.stubPictureServiceUploadMethod(Lists.newArrayList(pics)));
         when(treatmentRepository.save(any(Treatment.class)))
                 .then(AdditionalAnswers.returnsFirstArg());
 
+        //WHEN & THEN
         mockMvc.perform(MockMvcRequestBuilders.multipart("/treatment/add")
                         .file(pic1)
                         .file(pic2)
@@ -112,16 +112,14 @@ public class AddTreatmentPageAccessTests {
                 }))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-    private List<PictureDto> stubPictureServiceUploadMethod(List<MultipartFile> pictures) throws IOException {
-        List<PictureDto> dtos = new ArrayList<>();
-        for (MultipartFile picture : pictures) {
-            LocalDateTime timestamp = LocalDateTime.now();
-            String pathForObjects = "/ServicesPictures/"
-                    + timestamp
-                    + picture.getOriginalFilename();
-            dtos.add(new PictureDto(pathForObjects));
-        }
-        return dtos;
+
+    private void assertFormContainsAllTreatmentFormFields(MultiValueMap<String, String> testForm) {
+        Class<TreatmentForm> formClass = TreatmentForm.class;
+        Field[] fields = formClass.getDeclaredFields();
+        List<String> fieldsNames = Arrays.stream(fields)
+                .map(Field::getName)
+                .collect(Collectors.toList());
+        Assertions.assertThat(testForm.keySet()).containsAll(fieldsNames);
     }
 }
 
