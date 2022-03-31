@@ -10,6 +10,7 @@ public interface TreatmentRepository extends JpaRepository<Treatment, Integer> {
 
     @Query("SELECT t FROM Treatment t WHERE t.uuid = ?1")
     Treatment findByUuid(UUID uuid);
-
     List<Treatment> findAllByNameContaining(String name);
+    List<Treatment> findAllByTypesContains(TreatmentType type);
+    List<Treatment> findAllByNameContainingAndTypesContaining(String name, TreatmentType type);
 }

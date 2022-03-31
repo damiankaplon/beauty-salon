@@ -1,11 +1,14 @@
 package pl.damiankaplon.beautyspace.treatment;
 
+import com.google.common.collect.Lists;
 import lombok.*;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -22,20 +25,29 @@ public class Treatment {
     private LocalTime aproxTime;
     @Embedded
     private PriceRange priceRange;
-    @Embedded
-    private Picture picture;
+    @ElementCollection(targetClass = TreatmentType.class)
+    @Enumerated(EnumType.STRING)
+    private List<TreatmentType> types;
+    @ElementCollection(targetClass = Picture.class)
+    @Enumerated(EnumType.STRING)
+    private List<Picture> pictures;
 
     protected Treatment(){}
 
-    static Treatment of(TreatmentForm form, Picture picture) {
+    static Treatment of(TreatmentForm form, List<Picture> picture) {
         return Treatment.builder()
                 .uuid(UUID.randomUUID())
                 .name(form.getName())
-                .priceRange(new PriceRange(Float.valueOf(form.getMinPrice() + "0"), Float.valueOf(form.getMaxPrice() + "0")))
+                .priceRange(new PriceRange(Float.valueOf(form.getMinPrice()), Float.valueOf(form.getMaxPrice())))
                 .shortDescription(form.getShortDescription())
                 .aproxTime(form.getAproxTimeAsLocalTime())
                 .fullDescription(form.getFullDescription())
-                .picture(picture)
+                .pictures(Lists.newArrayList(picture))
+                .types(
+                        form.getChosenTypes().stream()
+                                .map(TreatmentType::fromString)
+                                .collect(Collectors.toList())
+                )
                 .build();
     }
 

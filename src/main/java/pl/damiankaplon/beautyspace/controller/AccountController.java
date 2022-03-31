@@ -14,7 +14,7 @@ import pl.damiankaplon.beautyspace.controller.form.RegisterForm;
 @Controller
 @RequestMapping("/account")
 @RequiredArgsConstructor
-class AccountController {
+public class AccountController {
 
     private final AccountService accountService;
     private final ModelMapper mapper;

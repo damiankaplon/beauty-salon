@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Damian Kaplon">
     <title>Offer</title>
     <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
     <!-- Bootstrap core CSS -->
@@ -15,6 +15,9 @@
         .row {
             padding-top: 5em;
             padding-bottom: 5em;
+        }
+        img {
+            padding-bottom: 1em;
         }
     </style>
 </head>
@@ -58,10 +61,12 @@
         </div><!-- / column -->
 
         <div class="col-md-7">
-            <img th:if="${dto.picture != null}" th:src="@{${dto.picture.getPathToFile()}}" alt="image" class="rounded">
+            <img th:each="pic: ${dto.pictures}"
+                 th:if="${pic != null}"
+                 th:src="@{${pic.getPathToFile()}}" alt="image" class="rounded"><!-- / project-info-box -->
             <div class="project-info-box">
-                <p><b>Categories:</b> Face</p>
-            </div><!-- / project-info-box -->
+                <p><b>Categories:</b> <span th:each="type : ${dto.getTypes()}" th:text="${type.getBodyPartName()}"></span></p>
+            </div>
         </div><!-- / column -->
     </div>
 </div>

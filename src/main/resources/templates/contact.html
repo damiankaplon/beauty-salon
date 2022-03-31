@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Damian Kaplon">
+    <title>Contact</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/btnlinkdisable.css}" href="../static/css/btnlinkdisable.css"/>
+    <link rel="stylesheet" th:href="@{/css/contact-styles.css}" href="../static/css/contact-styles.css"/>
+    <style>
+        .row {
+            padding-top: 25%;
+        }
+    </style>
+</head>
+<body>
+    <nav th:replace="/common/navbar.html"></nav>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+        <table class="table table-responsive">
+            <tbody>
+            <tr>
+                <th>E-mail</th>
+                <th>some.email@gmail.com</th>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <th>+48 555 555 555</th>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <th>Miasto ul. Ulica</th>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <footer th:replace="/common/footer.html"></footer>
+</body>
+</html>

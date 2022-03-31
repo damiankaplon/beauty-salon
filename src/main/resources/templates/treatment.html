@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Damian Kaplon">
     <title>Offer</title>
     <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
     <!-- Bootstrap core CSS -->
@@ -36,10 +36,18 @@
             <a href="#" class="btn btn-primary my-2 border-bottom">Make an appointment</a>
             <a sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:href="@{/treatment/add}" class="btn btn-secondary my-2">Add treatment</a>
           </p>
-          <p class="input-group">
-            <input type="search" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
-            <button type="button" id="search-btn" class="btn btn-outline-primary">search</button>
-          </p>
+          <form action="#" th:action="@{/treatment/search}" method="post" th:object="${searchForm}" class="input-group">
+
+              <select th:field="*{chosenType}" class="btn btn-outline-primary" style="border-radius: 0.2em">
+                <option value="" selected="selected" disabled hidden>Choose type</option>
+                <option th:each="type : ${types}"
+                      th:value="${type.getBodyPartName()}"
+                      th:text="${type.getBodyPartName()}"></option>
+              </select>
+
+            <input type="text" th:field="*{name}" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
+            <button type="submit" id="search-btn" class="btn btn-outline-primary">search</button>
+          </form>
         </div>
       </section>
 
@@ -49,16 +57,16 @@
             <div class="col-md-4" th:each="dto: ${dtoPage.content}">
               <div class="card mb-4 box-shadow">
 
-                <img th:if="${dto.picture != null}" class="card-img-top" th:src="@{${dto.picture.getPathToFile()}}"
+                <img th:if="${dto.pictures.size() > 0}" class="card-img-top" th:src="@{${dto.pictures.get(0).getPathToFile()}}"
                      style="height: 15em; max-width: inherit;" alt="Treatment image" />
-                <img th:if="${dto.picture == null}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
+                <img th:if="${dto.pictures.size() <= 0}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
 
                 <div class="card-body">
-                  <p class="card-text" th:text="*{dto.name}"></p>
-                  <p class="card-text" th:text="*{dto.shortDescription}"></p>
+                  <p class="card-text" th:text="*{dto.name}" style="font-weight: bold"></p>
+                  <p class="card-text" th:text="*{dto.shortDescription}" style="width: 100%; height: 10em"></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="@{'/treatment/' + *{dto.uuid}}">View</a></button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href="@{'/treatment/uuid/' + *{dto.uuid}}">View</a></button>
                       <button type="button" sec:authorize="hasAuthority('WRITE_PRIVILEGE')" class="btn btn-sm btn-outline-secondary">Edit</button>
                     </div>
                   </div>
@@ -88,8 +96,6 @@
           </div>
         </div>
       </div>
-
-
       <footer th:replace="/common/footer.html"></footer>
 
     <script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
@@ -97,7 +103,7 @@
       document.getElementById("search-btn").addEventListener("click", redirect);
       function redirect() {
         var searched = document.getElementById("search-input").value;
-        location.replace("/treatment/" + searched);
+        location.replace("/treatment/name/" + searched);
       }
     </script>
   </body>
