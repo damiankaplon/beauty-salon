@@ -1,11 +1,11 @@
-package pl.damiankaplon.beautyspace.treatment;
+package pl.damiankaplon.beautyspace.treatment.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum TreatmentType {
+enum TreatmentType {
 
     FULL_BODY("Full body"), HANDS("Hands"), FACE("Face"),
     LEGS("Legs"), BACK("Back"), CHEST("Chest"), STOMACH("Stomach");

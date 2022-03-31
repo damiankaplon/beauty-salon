@@ -1,6 +1,5 @@
 package pl.damiankaplon.beautyspace.controller;
 
-import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.collections.impl.list.Interval;
 import org.springframework.data.domain.Page;
@@ -13,14 +12,14 @@ import pl.damiankaplon.beautyspace.controller.form.SearchForm;
 import pl.damiankaplon.beautyspace.picture.PictureDto;
 import pl.damiankaplon.beautyspace.picture.PictureService;
 import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
-import pl.damiankaplon.beautyspace.treatment.Treatment;
-import pl.damiankaplon.beautyspace.treatment.TreatmentType;
-import pl.damiankaplon.beautyspace.treatment.TreatmentService;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/treatment")
@@ -34,10 +33,10 @@ public class TreatmentController {
     public String getPagedTreatments(Model model, @RequestParam("page")Optional<Integer> page) {
         int currentPage = page.orElse(0);
         int pageSize = 6;
-        Page<Treatment> treatmentsPage = treatmentService.geTreatmentsPage(PageRequest.of(currentPage, pageSize));
+        Page<Treatment> treatmentsPage = treatmentService.getTreatmentsPage(PageRequest.of(currentPage, pageSize));
         model.addAttribute("dtoPage", treatmentsPage);
         model.addAttribute("searchForm", new SearchForm());
-        model.addAttribute("types", List.of(TreatmentType.values()));
+        model.addAttribute("types", treatmentService.getAllTypes());
         model.addAttribute("pageNumbers", getNextFivePagesNumbers(currentPage, treatmentsPage.getTotalPages()));
 
         return "treatment";
@@ -69,14 +68,26 @@ public class TreatmentController {
     public String getAddTreatmentPage(Model model) {
         TreatmentForm form = new TreatmentForm();
         model.addAttribute("form", form);
-        model.addAttribute("types", List.of(TreatmentType.values()));
+        model.addAttribute("types", treatmentService.getAllTypes());
         return "add";
     }
 
     @PostMapping("/add")
     public String addNewTreatment(TreatmentForm form, @RequestParam("pic") MultipartFile[] pictures, Model model) throws IOException {
-        List<PictureDto> picDto = pictureService.upload(Lists.newArrayList(pictures));
-        Treatment added = treatmentService.addNewTreatment(form, picDto);
+        List<PictureDto> picDto = pictureService.upload(List.of(pictures));
+        Treatment toAdd = Treatment.builder()
+                .uuid(UUID.randomUUID())
+                .name(form.getName())
+                .shortDescription(form.getShortDescription())
+                .fullDescription(form.getFullDescription())
+                .types(form.getChosenTypes())
+                .priceRange(form.getMinPrice(), form.getMaxPrice())
+                .aproxTime(form.getAproxTimeAsLocalTime())
+                .pictures(picDto.stream()
+                        .map(PictureDto::getPathToFile)
+                        .collect(Collectors.toSet()))
+                .build();
+        Treatment added = treatmentService.addNewTreatment(toAdd);
         model.addAttribute("treatment", added);
         return "common/success";
     }
