@@ -10,12 +10,11 @@ public class TreatmentForm {
         private String name, shortDescription, fullDescription, minPrice, maxPrice, aproxTime;
         private Set<String> chosenTypes;
 
-        public Float getMinPrice() {
+        public Float getMinPriceValue() {
                 return Float.valueOf(this.minPrice);
-
         }
 
-        public Float getMaxPrice() {
+        public Float getMaxPriceValue() {
                 return Float.valueOf(this.maxPrice);
         }
 

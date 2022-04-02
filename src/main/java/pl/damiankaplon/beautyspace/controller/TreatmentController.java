@@ -16,9 +16,7 @@ import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -38,7 +36,6 @@ public class TreatmentController {
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("types", treatmentService.getAllTypes());
         model.addAttribute("pageNumbers", getNextFivePagesNumbers(currentPage, treatmentsPage.getTotalPages()));
-
         return "treatment";
     }
 
@@ -81,9 +78,9 @@ public class TreatmentController {
                 .shortDescription(form.getShortDescription())
                 .fullDescription(form.getFullDescription())
                 .types(form.getChosenTypes())
-                .priceRange(form.getMinPrice(), form.getMaxPrice())
+                .priceRange(form.getMinPriceValue(), form.getMaxPriceValue())
                 .aproxTime(form.getAproxTimeAsLocalTime())
-                .pictures(picDto.stream()
+                .images(picDto.stream()
                         .map(PictureDto::getPathToFile)
                         .collect(Collectors.toSet()))
                 .build();

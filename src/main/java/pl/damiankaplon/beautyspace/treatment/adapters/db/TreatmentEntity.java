@@ -2,6 +2,7 @@ package pl.damiankaplon.beautyspace.treatment.adapters.db;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 class TreatmentEntity {
     @Id
@@ -28,11 +28,12 @@ class TreatmentEntity {
 
     @ElementCollection(targetClass = TreatmentType.class)
     @Enumerated(EnumType.STRING)
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private Set<TreatmentType> types;
 
-    @OneToMany(mappedBy = "treatment")
-    @ToString.Exclude
-    private Set<Image> pictures;
+    @ElementCollection(targetClass = Image.class)
+    @Enumerated(EnumType.STRING)
+    private Set<Image> images;
 
     static TreatmentEntity of(Treatment treatment) {
         TreatmentEntity entity = new TreatmentEntity();
@@ -44,6 +45,14 @@ class TreatmentEntity {
         entity.setAproxTime(treatment.getAproxTime());
         entity.setMinPrice(treatment.getMinPrice());
         entity.setMaxPrice(treatment.getMaxPrice());
+        entity.setTypes(treatment.getTypesNames().stream()
+                .map(TreatmentType::fromString)
+                .collect(Collectors.toSet()));
+        entity.setImages(treatment.getImagesSrcs().stream().map(s -> {
+            Image image = new Image();
+            image.setSrc(s);
+            return image;
+        }).collect(Collectors.toSet()));
 
         return entity;
     }
@@ -56,8 +65,8 @@ class TreatmentEntity {
                 .fullDescription(entity.getFullDescription())
                 .aproxTime(entity.getAproxTime())
                 .priceRange(entity.getMinPrice(), entity.getMaxPrice())
-                .pictures(
-                        entity.getPictures().stream()
+                .images(
+                        entity.getImages().stream()
                         .map(Image::getSrc)
                         .collect(Collectors.toSet())
                 )

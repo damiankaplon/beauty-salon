@@ -3,6 +3,7 @@ package pl.damiankaplon.beautyspace.treatment.domain;
 import lombok.*;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -33,15 +34,15 @@ public class Treatment {
                 .collect(Collectors.toSet());
     }
 
-    public Set<String> getImagesSrcs() {
+    public List<String> getImagesSrcs() {
         return this.images.stream()
                 .map(Image::getSrc)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public static class TreatmentBuilder {
         private PriceRange priceRange;
-        private Set<Image> pictures;
+        private Set<Image> images;
         private Set<TreatmentType> types;
 
         public TreatmentBuilder priceRange(Float min, Float max) {
@@ -49,8 +50,8 @@ public class Treatment {
             return this;
         }
 
-        public TreatmentBuilder pictures(Set<String> srcs) {
-            this.pictures = srcs.stream()
+        public TreatmentBuilder images(Set<String> srcs) {
+            this.images = srcs.stream()
                     .map(Image::new)
                     .collect(Collectors.toSet());
             return this;
