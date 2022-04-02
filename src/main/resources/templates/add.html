@@ -50,8 +50,8 @@
   <select th:field="*{chosenTypes}" class="btn btn-outline-primary" id="type" style="border-radius: 0.2em; width: 100%">
     <option value="" selected="selected" disabled hidden>Choose type</option>
     <option th:each="type : ${types}"
-            th:value="${type.getBodyPartName()}"
-            th:text="${type.getBodyPartName()}"></option>
+            th:value="${type}"
+            th:text="${type}"></option>
   </select>
   <div class="form-group">
     <hr>

@@ -41,8 +41,8 @@
               <select th:field="*{chosenType}" class="btn btn-outline-primary" style="border-radius: 0.2em">
                 <option value="" selected="selected" disabled hidden>Choose type</option>
                 <option th:each="type : ${types}"
-                      th:value="${type.getBodyPartName()}"
-                      th:text="${type.getBodyPartName()}"></option>
+                      th:value="${type}"
+                      th:text="${type}"></option>
               </select>
 
             <input type="text" th:field="*{name}" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
@@ -57,9 +57,9 @@
             <div class="col-md-4" th:each="dto: ${dtoPage.content}">
               <div class="card mb-4 box-shadow">
 
-                <img th:if="${dto.pictures.size() > 0}" class="card-img-top" th:src="@{${dto.pictures.get(0).getPathToFile()}}"
+                <img th:if="${dto.getImagesSrcs().size() > 0}" class="card-img-top" th:src="@{${dto.getImagesSrcs.get(0)}}"
                      style="height: 15em; max-width: inherit;" alt="Treatment image" />
-                <img th:if="${dto.pictures.size() <= 0}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
+                <img th:if="${dto.getImagesSrcs().size() <= 0}" class="card-img-top" style="height: 15em; max-width: inherit;" alt="Treatment image" />
 
                 <div class="card-body">
                   <p class="card-text" th:text="*{dto.name}" style="font-weight: bold"></p>
