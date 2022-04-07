@@ -30,8 +30,7 @@ public class TreatmentController {
     @GetMapping("")
     public String getPagedTreatments(Model model, @RequestParam("page")Optional<Integer> page) {
         int currentPage = page.orElse(0);
-        int pageSize = 6;
-        Page<Treatment> treatmentsPage = treatmentService.getTreatmentsPage(PageRequest.of(currentPage, pageSize));
+        Page<Treatment> treatmentsPage = treatmentService.getTreatmentsPage(currentPage);
         model.addAttribute("dtoPage", treatmentsPage);
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("types", treatmentService.getAllTypes());

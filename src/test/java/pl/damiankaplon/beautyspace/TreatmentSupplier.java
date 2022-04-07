@@ -12,11 +12,24 @@ import java.util.function.Supplier;
 
 @NoArgsConstructor
 @AllArgsConstructor
-class TreatmentSupplier {
+public class TreatmentSupplier {
 
     private Supplier<Treatment> supplier;
 
     private Faker faker = new Faker();
+
+    public Treatment testTreatment() {
+        return Treatment.builder()
+                .uuid(UUID.randomUUID())
+                .name("test")
+                .shortDescription("short Description")
+                .fullDescription(faker.lorem().characters(2000))
+                .priceRange(100f, 120f)
+                .types(Set.of("Face"))
+                .images(Set.of("test.img"))
+                .aproxTime(LocalTime.parse("02:00"))
+                .build();
+    }
 
     public Treatment testTreatmentWithUuid(UUID uuid) {
         return Treatment.builder()

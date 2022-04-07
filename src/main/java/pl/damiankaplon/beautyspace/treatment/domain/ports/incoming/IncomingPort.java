@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IncomingPort {
-    Page<Treatment> getTreatmentsPage(Pageable pageable);
+    Page<Treatment> getTreatmentsPage(int page);
     Treatment addNewTreatment(Treatment treatment);
     List<Treatment> getAllByName(String name);
     Treatment getTreatment(UUID uuid);

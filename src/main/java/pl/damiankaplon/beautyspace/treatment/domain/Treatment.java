@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -65,4 +66,24 @@ public class Treatment {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Treatment other = (Treatment) o;
+        return uuid.equals(other.getUuid())
+                && name.equals(other.getName())
+                && shortDescription.equals(other.getShortDescription())
+                && fullDescription.equals(other.getFullDescription())
+                && aproxTime.equals(other.getAproxTime())
+                && getImagesSrcs().equals(other.getImagesSrcs())
+                && getTypesNames().equals(other.getTypesNames())
+                && getMinPrice().equals(other.getMinPrice())
+                && getMaxPrice().equals(other.getMaxPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, name, shortDescription, fullDescription, aproxTime, priceRange, types, images);
+    }
 }

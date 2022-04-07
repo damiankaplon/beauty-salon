@@ -53,7 +53,9 @@ public class TreatmentService implements IncomingPort {
     }
 
     @Override
-    public Page<Treatment> getTreatmentsPage(Pageable pageable) {
+    public Page<Treatment> getTreatmentsPage(int page) {
+        int pageSize = 6;
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
         List<Treatment> treatments = databasePort.findAll();
         List<Treatment> treatmentsPage = getTreatmentsForPage(pageable, treatments);
         return new PageImpl<>(
