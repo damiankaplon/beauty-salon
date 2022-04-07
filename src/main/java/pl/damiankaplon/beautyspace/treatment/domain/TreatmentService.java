@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import pl.damiankaplon.beautyspace.treatment.domain.ports.incoming.IncomingPort;
 import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.Database;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -38,6 +35,22 @@ public class TreatmentService implements IncomingPort {
         return Arrays.stream(TreatmentType.values())
                 .map(TreatmentType::getBodyPartName)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Treatment editTreatment(Treatment changes, UUID toChange) {
+        Treatment toBeChanged = databasePort.findByUuid(toChange);
+        Treatment withChanges = Treatment.builder()
+                .uuid(toBeChanged.getUuid())
+                .name(changes.getName())
+                .aproxTime(changes.getAproxTime())
+                .shortDescription(changes.getShortDescription())
+                .fullDescription(changes.getFullDescription())
+                .images(new HashSet<>(changes.getImagesSrcs()))
+                .types(new HashSet<>(changes.getTypesNames()))
+                .priceRange(changes.getMinPrice(), changes.getMaxPrice())
+                .build();
+        return databasePort.save(withChanges);
     }
 
     @Override

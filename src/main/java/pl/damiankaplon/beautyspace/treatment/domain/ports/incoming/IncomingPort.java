@@ -15,4 +15,5 @@ public interface IncomingPort {
     List<Treatment> getAllByType(String type);
     List<Treatment> getAllByNameAndType(String name, String type);
     List<String> getAllTypes();
+    Treatment editTreatment(Treatment changes, UUID toChange);
 }

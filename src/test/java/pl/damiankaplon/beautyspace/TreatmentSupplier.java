@@ -18,9 +18,9 @@ class TreatmentSupplier {
 
     private Faker faker = new Faker();
 
-    public Treatment testTreatment() {
+    public Treatment testTreatmentWithUuid(UUID uuid) {
         return Treatment.builder()
-                .uuid(UUID.randomUUID())
+                .uuid(uuid)
                 .name("test")
                 .shortDescription("short Description")
                 .fullDescription(faker.lorem().characters(2000))

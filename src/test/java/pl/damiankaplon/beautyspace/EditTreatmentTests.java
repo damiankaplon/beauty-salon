@@ -3,12 +3,16 @@ package pl.damiankaplon.beautyspace;
 import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.damiankaplon.beautyspace.treatment.adapters.db.DatabaseAdapter;
 import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 
+import javax.persistence.Entity;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.UUID;
@@ -17,6 +21,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class EditTreatmentTests {
 
     @Mock
@@ -35,7 +40,7 @@ public class EditTreatmentTests {
                 .shortDescription("short desc changed")
                 .fullDescription("full desc changed")
                 .images(Set.of("changed.jpg"))
-                .aproxTime(LocalTime.parse("99:99"))
+                .aproxTime(LocalTime.parse("03:59"))
                 .types(Set.of("Full body"))
                 .priceRange(999f, 9999f)
                 .build();
@@ -43,7 +48,7 @@ public class EditTreatmentTests {
         UUID toChange = UUID.fromString("123e4567-e89b-42d3-a456-556642440000");
 
         when(databaseAdapter.findByUuid(any(UUID.class)))
-                .thenReturn(treatmentSupplier.testTreatment());
+                .thenReturn(treatmentSupplier.testTreatmentWithUuid(toChange));
 
         when(databaseAdapter.save(any(Treatment.class)))
                 .then(returnsFirstArg());
