@@ -1,18 +1,15 @@
 package pl.damiankaplon.beautyspace;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.damiankaplon.beautyspace.treatment.adapters.db.DatabaseAdapter;
 import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 
-import javax.persistence.Entity;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.UUID;
@@ -50,7 +47,7 @@ public class EditTreatmentTests {
         when(databaseAdapter.findByUuid(any(UUID.class)))
                 .thenReturn(treatmentSupplier.testTreatmentWithUuid(toChange));
 
-        when(databaseAdapter.save(any(Treatment.class)))
+        when(databaseAdapter.update(any(Treatment.class)))
                 .then(returnsFirstArg());
 
         //WHEN
