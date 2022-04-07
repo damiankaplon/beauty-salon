@@ -1,5 +1,6 @@
 package pl.damiankaplon.beautyspace;
 
+import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
 import org.eclipse.collections.impl.list.Interval;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,7 @@ import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +34,7 @@ public class TreatmentServiceTests {
     @Test
     public void returnsFirstPageWithSixTreatments() {
         List<Treatment> fromDb = new ArrayList<>();
-        Interval.fromTo(1, 6).stream().forEach(i -> fromDb.add(treatmentSupplier.testTreatment()));
+        Interval.fromTo(1, 6).forEach((IntProcedure) i -> fromDb.add(treatmentSupplier.testTreatment()));
         when(databaseAdapter.findAll()).thenReturn(fromDb);
 
         Page<Treatment> treatmentPage = service.getTreatmentsPage(1);
@@ -48,13 +46,20 @@ public class TreatmentServiceTests {
     @Test
     public void returnsSecondPageWithOneTreatment() {
         List<Treatment> fromDb = new ArrayList<>();
-        Interval.fromTo(1, 7).stream().forEach(i -> fromDb.add(treatmentSupplier.testTreatment()));
+        Interval.fromTo(1, 7).forEach((IntProcedure) i -> fromDb.add(treatmentSupplier.testTreatment()));
         when(databaseAdapter.findAll()).thenReturn(fromDb);
 
         Page<Treatment> treatmentPage = service.getTreatmentsPage(2);
 
         Assertions.assertEquals(2, treatmentPage.getTotalPages());
         Assertions.assertEquals(1, treatmentPage.getContent().size());
+    }
+
+    @Test
+    public void returnsAllClientsRequiredTreatmentTypes() {
+        Set<String> clientRequires = Set.of("Face", "Full body", "Hands", "Legs", "Back", "Chest", "Stomach");
+        Set<String> types = new HashSet<>(service.getAllTypes());
+        Assertions.assertEquals(clientRequires, types);
     }
 
     @Test

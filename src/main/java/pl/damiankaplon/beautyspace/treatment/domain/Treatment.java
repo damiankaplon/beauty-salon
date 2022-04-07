@@ -3,10 +3,7 @@ package pl.damiankaplon.beautyspace.treatment.domain;
 import lombok.*;
 
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Builder
@@ -30,12 +27,14 @@ public class Treatment {
     }
 
     public Set<String> getTypesNames() {
+        if (this.types == null) return new HashSet<>();
         return this.types.stream()
                 .map(TreatmentType::getBodyPartName)
                 .collect(Collectors.toSet());
     }
 
     public List<String> getImagesSrcs() {
+        if (this.types == null) return new ArrayList<>();
         return this.images.stream()
                 .map(Image::getSrc)
                 .collect(Collectors.toList());
