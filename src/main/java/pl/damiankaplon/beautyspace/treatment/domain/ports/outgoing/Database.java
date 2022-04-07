@@ -12,5 +12,5 @@ public interface Database {
     List<Treatment> findAllByNameContainingAndTypesContaining(String name, String type);
     List<Treatment> findAll();
     Treatment save(Treatment treatment);
-
+    Treatment update(Treatment treatment);
 }

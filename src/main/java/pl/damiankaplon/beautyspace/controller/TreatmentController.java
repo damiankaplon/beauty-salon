@@ -53,6 +53,36 @@ public class TreatmentController {
         return "treatment-details";
     }
 
+    @GetMapping("/uuid/{uuid}/edit")
+    public String getEditTreatmentPage (@PathVariable String uuid, Model model) {
+        Treatment toChange = treatmentService.getTreatment(UUID.fromString(uuid));
+        model.addAttribute("form", TreatmentForm.filledWith(toChange));
+        model.addAttribute("uuid", uuid);
+        model.addAttribute("types", treatmentService.getAllTypes());
+        return "edit-treatment";
+    }
+
+    @PostMapping("/uuid/{uuid}/edit")
+    public String updateTreatment(@PathVariable String uuid, TreatmentForm form,
+                                  @RequestParam("pic") MultipartFile[] pictures, Model model) throws IOException {
+        List<PictureDto> picDto = pictureService.upload(List.of(pictures));
+        Treatment change = Treatment.builder()
+                .uuid(UUID.randomUUID())
+                .name(form.getName())
+                .shortDescription(form.getShortDescription())
+                .fullDescription(form.getFullDescription())
+                .types(form.getChosenTypes())
+                .priceRange(form.getMinPriceValue(), form.getMaxPriceValue())
+                .aproxTime(form.getAproxTimeAsLocalTime())
+                .images(picDto.stream()
+                        .map(PictureDto::getPathToFile)
+                        .collect(Collectors.toSet()))
+                .build();
+        Treatment changed = treatmentService.editTreatment(change, UUID.fromString(uuid));
+        model.addAttribute("treatment", changed);
+        return "common/success";
+    }
+
     @PostMapping("/search")
     public String searchFromTreatmentByNameAndType(SearchForm form, Model model) {
         List<Treatment> dtos = treatmentService.getAllByNameAndType(form.getName(), form.getChosenType());
@@ -63,10 +93,10 @@ public class TreatmentController {
 
     @GetMapping("/add")
     public String getAddTreatmentPage(Model model) {
-        TreatmentForm form = new TreatmentForm();
+        TreatmentForm form = TreatmentForm.empty();
         model.addAttribute("form", form);
         model.addAttribute("types", treatmentService.getAllTypes());
-        return "add";
+        return "add-treatment";
     }
 
     @PostMapping("/add")

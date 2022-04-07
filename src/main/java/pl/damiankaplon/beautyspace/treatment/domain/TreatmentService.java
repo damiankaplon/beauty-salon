@@ -50,7 +50,7 @@ public class TreatmentService implements IncomingPort {
                 .types(new HashSet<>(changes.getTypesNames()))
                 .priceRange(changes.getMinPrice(), changes.getMaxPrice())
                 .build();
-        return databasePort.save(withChanges);
+        return databasePort.update(withChanges);
     }
 
     @Override

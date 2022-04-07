@@ -28,6 +28,14 @@ public class DatabaseAdapter implements Database {
     }
 
     @Override
+    public Treatment update(Treatment treatment) {
+        TreatmentEntity entity = repo.findByUuid(treatment.getUuid());
+        TreatmentEntity toSave = TreatmentEntity.of(treatment);
+        toSave.setId(entity.getId());
+        return TreatmentEntity.to(repo.save(toSave));
+    }
+
+    @Override
     public List<Treatment> findAllByNameContaining(String name) {
         List<TreatmentEntity> entities = repo.findAllByNameContaining(name);
         return toDomainsList(entities);
