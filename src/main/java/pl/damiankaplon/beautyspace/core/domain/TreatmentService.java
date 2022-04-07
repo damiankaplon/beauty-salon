@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.treatment.domain;
+package pl.damiankaplon.beautyspace.core.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -6,23 +6,25 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.damiankaplon.beautyspace.treatment.domain.ports.incoming.IncomingPort;
-import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.Database;
+import org.springframework.web.multipart.MultipartFile;
+import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
+import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.core.domain.ports.incoming.Web;
+import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
+import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
 
+import java.io.IOException;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
-public class TreatmentService implements IncomingPort {
+public class TreatmentService implements Web {
 
     private final Database databasePort;
-
-    @Override
-    public Treatment addNewTreatment(Treatment treatment) {
-        return databasePort.save(treatment);
-    }
+    private final ImageUploader imageUploader;
 
     @Override
     public Treatment getTreatment(UUID uuid) {
@@ -37,17 +39,18 @@ public class TreatmentService implements IncomingPort {
     }
 
     @Override
-    public Treatment editTreatment(Treatment changes, UUID toChange) {
+    public Treatment editTreatment(UUID toChange, Form changes, MultipartFile[] imgs) throws IOException {
         Treatment toBeChanged = databasePort.findByUuid(toChange);
+        List<ImageDto> images = imageUploader.upload(List.of(imgs));
         Treatment withChanges = Treatment.builder()
                 .uuid(toBeChanged.getUuid())
                 .name(changes.getName())
-                .aproxTime(changes.getAproxTime())
+                .aproxTime(LocalTime.parse(changes.getAproxTime()))
                 .shortDescription(changes.getShortDescription())
                 .fullDescription(changes.getFullDescription())
-                .images(new HashSet<>(changes.getImagesSrcs()))
-                .types(new HashSet<>(changes.getTypesNames()))
-                .priceRange(changes.getMinPrice(), changes.getMaxPrice())
+                .images(images.stream().map(ImageDto::getPathToFile).collect(Collectors.toSet()))
+                .types(changes.getChosenTypes())
+                .priceRange(changes.getMinPriceValue(), changes.getMaxPriceValue())
                 .build();
         return databasePort.update(withChanges);
     }
@@ -61,6 +64,25 @@ public class TreatmentService implements IncomingPort {
         return new PageImpl<>(
                 treatmentsPage, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), treatments.size()
         );
+    }
+
+    @Override
+    public Treatment addNewTreatment(Form form, MultipartFile[] imgs) throws IOException {
+        List<ImageDto> images  = imageUploader.upload(List.of(imgs));
+        Treatment toAdd = Treatment.builder()
+                .uuid(UUID.randomUUID())
+                .name(form.getName())
+                .shortDescription(form.getShortDescription())
+                .fullDescription(form.getFullDescription())
+                .types(form.getChosenTypes())
+                .priceRange(form.getMinPriceValue(), form.getMaxPriceValue())
+                .aproxTime(form.getAproxTimeAsLocalTime())
+                .images(images.stream()
+                                .map(ImageDto::getPathToFile)
+                                .collect(Collectors.toSet())
+                )
+                .build();
+       return databasePort.save(toAdd);
     }
 
     private List<Treatment> getTreatmentsForPage(Pageable pageable, List<Treatment> treatments) {
@@ -85,12 +107,6 @@ public class TreatmentService implements IncomingPort {
     @Override
     public List<Treatment> getAllByName(String name) {
         return databasePort.findAllByNameContaining(name);
-    }
-
-
-    @Override
-    public List<Treatment> getAllByType(String type) {
-        return databasePort.findAllByTypesContains(type);
     }
 
     @Override

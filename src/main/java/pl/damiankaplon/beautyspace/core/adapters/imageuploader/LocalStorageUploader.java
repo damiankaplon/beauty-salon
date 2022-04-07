@@ -1,7 +1,9 @@
-package pl.damiankaplon.beautyspace.picture;
+package pl.damiankaplon.beautyspace.core.adapters.imageuploader;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,11 +13,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class PictureService {
-
-    public List<PictureDto> upload(List<MultipartFile> pictures) throws IOException {
-        List<PictureDto> dtos = new ArrayList<>();
+@Component
+public class LocalStorageUploader implements ImageUploader {
+    public List<ImageDto> upload(List<MultipartFile> pictures) throws IOException {
+        List<ImageDto> dtos = new ArrayList<>();
         if (pictures == null || pictures.size() == 0) return dtos;
 
         for (MultipartFile picture : pictures) {
@@ -33,7 +34,7 @@ public class PictureService {
                     + timestamp
                     + picture.getOriginalFilename();
 
-            dtos.add(new PictureDto(pathForObjects));
+            dtos.add(new ImageDto(pathForObjects));
         }
 
         return dtos;

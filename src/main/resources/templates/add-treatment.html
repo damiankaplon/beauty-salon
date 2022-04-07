@@ -78,10 +78,10 @@
       <textarea rows="4" th:field="*{fullDescription}" class="form-control" id="v-description" th:maxlength="5096"> </textarea>
     </div>
     <hr>
-    <label for="pic" class="custom-file">
+    <label for="imgs" class="custom-file">
       <i class="fa fa-cloud-upload"></i> Choose image
     </label>
-    <input id="pic" name="pic" type="file" multiple accept=".gif, .jpg, .png, .jpeg"/>
+    <input id="imgs" name="imgs" type="file" multiple accept=".gif, .jpg, .png, .jpeg"/>
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <hr>
 

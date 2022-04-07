@@ -3,7 +3,7 @@ package pl.damiankaplon.beautyspace;
 import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
+import pl.damiankaplon.beautyspace.core.domain.Treatment;
 
 import java.time.LocalTime;
 import java.util.Set;

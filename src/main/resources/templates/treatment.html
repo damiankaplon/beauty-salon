@@ -88,7 +88,7 @@
               </li>
               <li th:each="pageNumber : ${pageNumbers}"
                   th:class="'page-item'+${pageNumber==(dtoPage.number + 1) ? ' active' :''}">
-                <a th:href="@{/treatment(page=${pageNumber - 1})}"
+                <a th:href="@{/treatment(page=${pageNumber})}"
                    th:text="${pageNumber}"
                    class="page-link"></a>
               </li>

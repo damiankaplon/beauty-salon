@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.treatment.domain;
+package pl.damiankaplon.beautyspace.core.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

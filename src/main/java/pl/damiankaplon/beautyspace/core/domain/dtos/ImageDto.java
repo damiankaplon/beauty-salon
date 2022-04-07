@@ -1,10 +1,10 @@
-package pl.damiankaplon.beautyspace.picture;
+package pl.damiankaplon.beautyspace.core.domain.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class PictureDto {
+public class ImageDto {
     private String pathToFile;
 }

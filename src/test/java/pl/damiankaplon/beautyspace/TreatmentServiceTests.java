@@ -1,5 +1,6 @@
 package pl.damiankaplon.beautyspace;
 
+import com.github.javafaker.Faker;
 import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
 import org.eclipse.collections.impl.list.Interval;
 import org.junit.jupiter.api.Assertions;
@@ -9,12 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import pl.damiankaplon.beautyspace.treatment.adapters.db.DatabaseAdapter;
-import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
-import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
+import org.springframework.mock.web.MockMultipartFile;
+import pl.damiankaplon.beautyspace.core.adapters.db.DatabaseAdapter;
+import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.core.domain.TreatmentService;
+import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
+import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
 
-import java.time.LocalTime;
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,6 +32,9 @@ public class TreatmentServiceTests {
 
     @Mock
     DatabaseAdapter databaseAdapter;
+
+    @Mock
+    ImageUploader imageUploader;
 
     @InjectMocks
     TreatmentService service;
@@ -63,43 +73,48 @@ public class TreatmentServiceTests {
     }
 
     @Test
-    public void editFullyTreatmentTest() {
+    public void editFullyTreatmentTest() throws IOException {
         //GIVEN
-        Treatment changes = Treatment.builder()
-                .name("changed")
-                .shortDescription("short desc changed")
-                .fullDescription("full desc changed")
-                .images(Set.of("changed.jpg"))
-                .aproxTime(LocalTime.parse("03:59"))
-                .types(Set.of("Full body"))
-                .priceRange(999f, 9999f)
-                .build();
+        Form changes = new Form();
+        changes.setChosenTypes(Set.of("Full body"));
+        changes.setName("changed");
+        changes.setShortDescription("short desc changed");
+        changes.setFullDescription("full desc changed");
+        changes.setAproxTime("03:59");
+        changes.setChosenTypes(Set.of("Full body"));
+        changes.setMinPrice("100");
+        changes.setMaxPrice("1000");
+        MockMultipartFile[] images = new MockMultipartFile[] {
+                        new MockMultipartFile("image1.jpg", new byte[]{12, 12, 12}),
+                        new MockMultipartFile("image2.jpg", new byte[]{12, 12, 12})
+        };
 
         UUID toChange = UUID.fromString("123e4567-e89b-42d3-a456-556642440000");
 
         when(databaseAdapter.findByUuid(any(UUID.class)))
                 .thenReturn(treatmentSupplier.testTreatmentWithUuid(toChange));
-
+        when(imageUploader.upload(any()))
+                .thenReturn(List.of(new ImageDto("image1.jpg"), new ImageDto("image2.jpg")));
         when(databaseAdapter.update(any(Treatment.class)))
                 .then(returnsFirstArg());
 
         //WHEN
-        Treatment changedTreatment = service.editTreatment(changes, toChange);
+        Treatment changedTreatment = service.editTreatment(toChange, changes, images);
         //THEN
         Assertions.assertEquals(changedTreatment.getUuid(), toChange);
-        assertSimilarityWithoutUuid(changedTreatment, changes);
+        Assertions.assertEquals(changes.getName(), changedTreatment.getName());
+        Assertions.assertEquals(changes.getName(), changedTreatment.getName());
+        Assertions.assertEquals(changes.getShortDescription(), changedTreatment.getShortDescription());
+        Assertions.assertEquals(changes.getFullDescription(), changedTreatment.getFullDescription());
+        Assertions.assertEquals(changes.getAproxTime(), changedTreatment.getAproxTime().toString());
+        Assertions.assertEquals(changes.getChosenTypes(), changedTreatment.getTypesNames());
+        Assertions.assertEquals(changes.getMinPriceValue(), changedTreatment.getMinPrice());
+        Assertions.assertEquals(changes.getMaxPriceValue(), changedTreatment.getMaxPrice());
 
+        Set<String> srcs = Stream.of(images)
+                .map(MockMultipartFile::getName)
+                .collect(Collectors.toSet());
+        Assertions.assertEquals(srcs, new HashSet<>(changedTreatment.getImagesSrcs()));
     }
 
-    private static void assertSimilarityWithoutUuid(Treatment actual, Treatment expected) {
-        Assertions.assertEquals(actual.getName(), expected.getName());
-        Assertions.assertEquals(actual.getName(), expected.getName());
-        Assertions.assertEquals(actual.getShortDescription(), expected.getShortDescription());
-        Assertions.assertEquals(actual.getFullDescription(), expected.getFullDescription());
-        Assertions.assertEquals(actual.getAproxTime().toString(), expected.getAproxTime().toString());
-        Assertions.assertEquals(actual.getImagesSrcs(), expected.getImagesSrcs());
-        Assertions.assertEquals(actual.getTypesNames(), expected.getTypesNames());
-        Assertions.assertEquals(actual.getMinPrice(), expected.getMinPrice());
-        Assertions.assertEquals(actual.getMaxPrice(), expected.getMaxPrice());
-    }
 }
