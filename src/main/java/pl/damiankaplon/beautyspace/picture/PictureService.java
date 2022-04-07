@@ -16,6 +16,8 @@ public class PictureService {
 
     public List<PictureDto> upload(List<MultipartFile> pictures) throws IOException {
         List<PictureDto> dtos = new ArrayList<>();
+        if (pictures == null || pictures.size() == 0) return dtos;
+
         for (MultipartFile picture : pictures) {
             byte[] bytes = picture.getBytes();
 

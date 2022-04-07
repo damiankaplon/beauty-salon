@@ -1,7 +1,6 @@
 package pl.damiankaplon.beautyspace.treatment.domain;
 
 import lombok.*;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalTime;
 import java.util.List;
