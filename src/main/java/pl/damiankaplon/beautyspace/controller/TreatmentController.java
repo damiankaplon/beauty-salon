@@ -54,7 +54,7 @@ public class TreatmentController {
     }
 
     @PostMapping("/search")
-    public String getTreatmentsByName(SearchForm form, Model model) {
+    public String searchFromTreatmentByNameAndType(SearchForm form, Model model) {
         List<Treatment> dtos = treatmentService.getAllByNameAndType(form.getName(), form.getChosenType());
         model.addAttribute("dtos", dtos);
         return "treatments-container";
