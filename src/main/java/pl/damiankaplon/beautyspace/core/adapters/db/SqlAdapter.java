@@ -1,7 +1,7 @@
 package pl.damiankaplon.beautyspace.core.adapters.db;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
 
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Repository
+@Component
 @RequiredArgsConstructor
-public class DatabaseAdapter implements Database {
+public class SqlAdapter implements Database {
 
     private final TreatmentRepository repo;
 
@@ -36,14 +36,14 @@ public class DatabaseAdapter implements Database {
     }
 
     @Override
-    public List<Treatment> findAllByNameContaining(String name) {
-        List<TreatmentEntity> entities = repo.findAllByNameContaining(name);
+    public List<Treatment> findByNameContainingIgnoreCase(String name) {
+        List<TreatmentEntity> entities = repo.findByNameIgnoreCaseContaining(name);
         return toDomainsList(entities);
     }
 
     @Override
     public List<Treatment> findAllByNameContainingAndTypesContaining(String name, String type) {
-        List<TreatmentEntity> entities = repo.findAllByNameContainingAndTypesContaining(name, TreatmentType.fromString(type));
+        List<TreatmentEntity> entities = repo.findByNameIgnoreCaseContainingAndTypesContaining(name, TreatmentType.fromString(type));
         return toDomainsList(entities);
 
     }

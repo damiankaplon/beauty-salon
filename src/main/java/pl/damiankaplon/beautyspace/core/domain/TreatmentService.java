@@ -106,7 +106,7 @@ public class TreatmentService implements Web {
 
     @Override
     public List<Treatment> getAllByName(String name) {
-        return databasePort.findAllByNameContaining(name);
+        return databasePort.findByNameContainingIgnoreCase(name);
     }
 
     @Override

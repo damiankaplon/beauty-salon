@@ -7,7 +7,7 @@ import java.util.UUID;
 
 interface TreatmentRepository extends JpaRepository<TreatmentEntity, Long> {
     TreatmentEntity findByUuid(UUID uuid);
-    List<TreatmentEntity> findAllByNameContaining(String name);
+    List<TreatmentEntity> findByNameIgnoreCaseContaining(String name);
     List<TreatmentEntity> findAllByTypesContains(TreatmentType type);
-    List<TreatmentEntity> findAllByNameContainingAndTypesContaining(String name, TreatmentType type);
+    List<TreatmentEntity> findByNameIgnoreCaseContainingAndTypesContaining(String name, TreatmentType type);
 }

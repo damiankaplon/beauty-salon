@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockMultipartFile;
 import pl.damiankaplon.beautyspace.TreatmentSupplier;
-import pl.damiankaplon.beautyspace.core.adapters.db.DatabaseAdapter;
+import pl.damiankaplon.beautyspace.core.adapters.db.SqlAdapter;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 import pl.damiankaplon.beautyspace.core.domain.TreatmentService;
 import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 public class TreatmentServiceTests {
 
     @Mock
-    DatabaseAdapter databaseAdapter;
+    SqlAdapter databaseAdapter;
 
     @Mock
     ImageUploader imageUploader;
@@ -44,7 +44,7 @@ public class TreatmentServiceTests {
     @Test
     public void returnsFirstPageWithSixTreatments() {
         List<Treatment> fromDb = new ArrayList<>();
-        Interval.fromTo(1, 6).forEach((IntProcedure) i -> fromDb.add(treatmentSupplier.testTreatment()));
+        Interval.fromTo(1, 6).forEach((IntProcedure) i -> fromDb.add(treatmentSupplier.random()));
         when(databaseAdapter.findAll()).thenReturn(fromDb);
 
         Page<Treatment> treatmentPage = service.getTreatmentsPage(1);
@@ -56,7 +56,7 @@ public class TreatmentServiceTests {
     @Test
     public void returnsSecondPageWithOneTreatment() {
         List<Treatment> fromDb = new ArrayList<>();
-        Interval.fromTo(1, 7).forEach((IntProcedure) i -> fromDb.add(treatmentSupplier.testTreatment()));
+        Interval.fromTo(1, 7).forEach((IntProcedure) i -> fromDb.add(treatmentSupplier.random()));
         when(databaseAdapter.findAll()).thenReturn(fromDb);
 
         Page<Treatment> treatmentPage = service.getTreatmentsPage(2);
@@ -92,7 +92,7 @@ public class TreatmentServiceTests {
         UUID toChange = UUID.fromString("123e4567-e89b-42d3-a456-556642440000");
 
         when(databaseAdapter.findByUuid(any(UUID.class)))
-                .thenReturn(treatmentSupplier.testTreatmentWithUuid(toChange));
+                .thenReturn(treatmentSupplier.randomWithUuid(toChange));
         when(imageUploader.upload(any()))
                 .thenReturn(List.of(new ImageDto("image1.jpg"), new ImageDto("image2.jpg")));
         when(databaseAdapter.update(any(Treatment.class)))

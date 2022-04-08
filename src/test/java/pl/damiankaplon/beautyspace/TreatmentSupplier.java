@@ -18,28 +18,54 @@ public class TreatmentSupplier {
 
     private Faker faker = new Faker();
 
-    public Treatment testTreatment() {
+    public Treatment random() {
         return Treatment.builder()
                 .uuid(UUID.randomUUID())
-                .name("test")
-                .shortDescription("short Description")
-                .fullDescription(faker.lorem().characters(2000))
-                .priceRange(100f, 120f)
+                .name(faker.lorem().characters(20))
+                .shortDescription(faker.lorem().characters(100))
+                .fullDescription(faker.lorem().characters(255))
+                .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
                 .types(Set.of("Face"))
-                .images(Set.of("test.img"))
+                .images(Set.of(faker.lorem().characters(10) + ".jpg"))
                 .aproxTime(LocalTime.parse("02:00"))
                 .build();
     }
 
-    public Treatment testTreatmentWithUuid(UUID uuid) {
+    public Treatment randomWithUuid(UUID uuid) {
         return Treatment.builder()
                 .uuid(uuid)
-                .name("test")
-                .shortDescription("short Description")
-                .fullDescription(faker.lorem().characters(2000))
-                .priceRange(100f, 120f)
+                .name(faker.lorem().characters(20))
+                .shortDescription(faker.lorem().characters(100))
+                .fullDescription(faker.lorem().characters(255))
+                .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
                 .types(Set.of("Face"))
-                .images(Set.of("test.img"))
+                .images(Set.of(faker.lorem().characters(10) + "jpg"))
+                .aproxTime(LocalTime.parse("02:00"))
+                .build();
+    }
+
+    public Treatment randomWithName(String name) {
+        return Treatment.builder()
+                .uuid(UUID.randomUUID())
+                .name(name)
+                .shortDescription(faker.lorem().characters(100))
+                .fullDescription(faker.lorem().characters(255))
+                .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
+                .types(Set.of("Face"))
+                .images(Set.of(faker.lorem().characters(10) + "jpg"))
+                .aproxTime(LocalTime.parse("02:00"))
+                .build();
+    }
+
+    public Treatment randomWithNameAndType(String name, String type) {
+        return Treatment.builder()
+                .uuid(UUID.randomUUID())
+                .name(name)
+                .shortDescription(faker.lorem().characters(100))
+                .fullDescription(faker.lorem().characters(255))
+                .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
+                .types(Set.of(type))
+                .images(Set.of(faker.lorem().characters(10) + "jpg"))
                 .aproxTime(LocalTime.parse("02:00"))
                 .build();
     }
