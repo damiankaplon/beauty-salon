@@ -1,9 +1,9 @@
-package pl.damiankaplon.beautyspace.treatment.adapters.db;
+package pl.damiankaplon.beautyspace.core.adapters.db;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
-import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.Database;
+import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +25,14 @@ public class DatabaseAdapter implements Database {
     public Treatment save(Treatment treatment) {
         TreatmentEntity entity = TreatmentEntity.of(treatment);
         return TreatmentEntity.to(repo.save(entity));
+    }
+
+    @Override
+    public Treatment update(Treatment treatment) {
+        TreatmentEntity entity = repo.findByUuid(treatment.getUuid());
+        TreatmentEntity toSave = TreatmentEntity.of(treatment);
+        toSave.setId(entity.getId());
+        return TreatmentEntity.to(repo.save(toSave));
     }
 
     @Override

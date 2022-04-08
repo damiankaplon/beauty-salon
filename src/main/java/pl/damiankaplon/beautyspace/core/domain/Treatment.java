@@ -1,11 +1,9 @@
-package pl.damiankaplon.beautyspace.treatment.domain;
+package pl.damiankaplon.beautyspace.core.domain;
 
 import lombok.*;
 
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Builder
@@ -29,12 +27,14 @@ public class Treatment {
     }
 
     public Set<String> getTypesNames() {
+        if (this.types == null) return new HashSet<>();
         return this.types.stream()
                 .map(TreatmentType::getBodyPartName)
                 .collect(Collectors.toSet());
     }
 
     public List<String> getImagesSrcs() {
+        if (this.types == null) return new ArrayList<>();
         return this.images.stream()
                 .map(Image::getSrc)
                 .collect(Collectors.toList());
@@ -63,7 +63,26 @@ public class Treatment {
                     .collect(Collectors.toSet());
             return this;
         }
-
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Treatment other = (Treatment) o;
+        return uuid.equals(other.getUuid())
+                && name.equals(other.getName())
+                && shortDescription.equals(other.getShortDescription())
+                && fullDescription.equals(other.getFullDescription())
+                && aproxTime.equals(other.getAproxTime())
+                && getImagesSrcs().equals(other.getImagesSrcs())
+                && getTypesNames().equals(other.getTypesNames())
+                && getMinPrice().equals(other.getMinPrice())
+                && getMaxPrice().equals(other.getMaxPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, name, shortDescription, fullDescription, aproxTime, priceRange, types, images);
+    }
 }
