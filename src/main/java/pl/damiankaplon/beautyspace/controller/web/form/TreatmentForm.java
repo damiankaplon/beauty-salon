@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.controller.form;
+package pl.damiankaplon.beautyspace.controller.web.form;
 
 import lombok.AccessLevel;
 import lombok.Data;

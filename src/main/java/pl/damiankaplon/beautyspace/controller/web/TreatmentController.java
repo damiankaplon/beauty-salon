@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.controller;
+package pl.damiankaplon.beautyspace.controller.web;
 
 import lombok.RequiredArgsConstructor;
 import org.eclipse.collections.impl.list.Interval;
@@ -8,16 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautyspace.controller.form.SearchForm;
+import pl.damiankaplon.beautyspace.controller.web.form.SearchForm;
+import pl.damiankaplon.beautyspace.controller.web.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
-import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
-import pl.damiankaplon.beautyspace.controller.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 import pl.damiankaplon.beautyspace.core.domain.TreatmentService;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/treatment")

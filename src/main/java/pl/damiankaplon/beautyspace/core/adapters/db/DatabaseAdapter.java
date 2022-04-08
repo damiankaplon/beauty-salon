@@ -42,13 +42,6 @@ public class DatabaseAdapter implements Database {
     }
 
     @Override
-    public List<Treatment> findAllByTypesContains(String typeName) {
-        TreatmentType type = TreatmentType.fromString(typeName);
-        List<TreatmentEntity> entities = repo.findAllByTypesContains(type);
-        return toDomainsList(entities);
-    }
-
-    @Override
     public List<Treatment> findAllByNameContainingAndTypesContaining(String name, String type) {
         List<TreatmentEntity> entities = repo.findAllByNameContainingAndTypesContaining(name, TreatmentType.fromString(type));
         return toDomainsList(entities);

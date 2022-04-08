@@ -1,6 +1,5 @@
-package pl.damiankaplon.beautyspace;
+package pl.damiankaplon.beautyspace.unit;
 
-import com.github.javafaker.Faker;
 import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
 import org.eclipse.collections.impl.list.Interval;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockMultipartFile;
+import pl.damiankaplon.beautyspace.TreatmentSupplier;
 import pl.damiankaplon.beautyspace.core.adapters.db.DatabaseAdapter;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 import pl.damiankaplon.beautyspace.core.domain.TreatmentService;

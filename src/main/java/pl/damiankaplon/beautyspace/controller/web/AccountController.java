@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.controller;
+package pl.damiankaplon.beautyspace.controller.web;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.damiankaplon.beautyspace.account.AccountDto;
 import pl.damiankaplon.beautyspace.account.AccountService;
-import pl.damiankaplon.beautyspace.controller.form.RegisterForm;
+import pl.damiankaplon.beautyspace.controller.web.form.RegisterForm;
 
 @Controller
 @RequestMapping("/account")

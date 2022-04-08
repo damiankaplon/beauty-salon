@@ -1,6 +1,5 @@
 package pl.damiankaplon.beautyspace.core.domain.dtos;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

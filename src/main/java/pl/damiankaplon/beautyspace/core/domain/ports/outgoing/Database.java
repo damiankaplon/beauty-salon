@@ -8,7 +8,6 @@ import java.util.UUID;
 public interface Database {
     Treatment findByUuid(UUID uuid);
     List<Treatment> findAllByNameContaining(String name);
-    List<Treatment> findAllByTypesContains(String typeName);
     List<Treatment> findAllByNameContainingAndTypesContaining(String name, String type);
     List<Treatment> findAll();
     Treatment save(Treatment treatment);
