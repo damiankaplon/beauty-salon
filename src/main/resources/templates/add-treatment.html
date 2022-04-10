@@ -9,6 +9,7 @@
   <link rel="icon" type="image/x-icon" th:href="@{/img/logos/favicon.png}">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
   <link rel="stylesheet" th:href="@{/css/btnlinkdisable.css}" href="../static/css/btnlinkdisable.css"/>
+  <link rel="stylesheet" th:href="@{/css/jquery.durationpicker.min.css}" href="../static/css/jquery.durationpicker.min.css"/>
   <style>
     .c-form {
       padding: 4em 1em 6em;
@@ -56,9 +57,9 @@
     <div class="form-group">
       <hr>
       <label for="start-price">Starting price</label>
-      <input type="number" th:field="*{minPrice}" class="form-control" id="start-price" placeholder="0.00" />
+      <input type="number" th:field="*{minPrice}" class="form-control" id="start-price" min="0" placeholder="0.00" />
       <label for="max-price">Maximum price</label>
-      <input type="number" th:field="*{maxPrice}" class="form-control" id="max-price" placeholder="100000.00" />
+      <input type="number" th:field="*{maxPrice}" class="form-control" id="max-price" min="1" placeholder="1000.00" />
     </div>
     <hr>
     <div class="form-group">
@@ -95,10 +96,11 @@
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script th:src="@{/js/jquery.durationpicker.min.js}" src="../static/js/jquery.durationpicker.min.js"></script>
 <script>
-  $('input[name=aprox-time]').durationpicker({showDays: false})
+  $('input[name=aprox-time]').durationPicker({showDays: false,  hoursLabel: "Hours", minsLabel:"Minutes"})
           .on("change", function($val){
-            $('#time-value').text("" + $(this).val());
+            $('#time-value').val($(this).val());
           });
+
 
 </script>
 </body>
