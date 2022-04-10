@@ -93,7 +93,7 @@
 <footer th:replace="/common/footer.html"></footer>
 
 <script th:src="@{/js/bootstrap.bundle.min.js}" src="../static/js/bootstrap.bundle.min.js"> </script>
-<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
 <script th:src="@{/js/jquery.durationpicker.min.js}" src="../static/js/jquery.durationpicker.min.js"></script>
 <script>
   $('input[name=aprox-time]').durationPicker({showDays: false,  hoursLabel: "Hours", minsLabel:"Minutes"})

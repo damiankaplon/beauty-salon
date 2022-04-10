@@ -10,7 +10,7 @@ public class TreatmentAsserter {
         Assertions.assertEquals(expected.getName(), actual.getName());
         Assertions.assertEquals(expected.getShortDescription(), actual.getShortDescription());
         Assertions.assertEquals(expected.getFullDescription(), actual.getFullDescription());
-        Assertions.assertEquals(expected.getAproxTime().toString(), actual.getAproxTime().toString());
+        Assertions.assertEquals(expected.getAproxTime(), actual.getAproxTime());
         Assertions.assertEquals(expected.getTypesNames(), actual.getTypesNames());
         Assertions.assertEquals(expected.getMinPrice(), actual.getMinPrice());
         Assertions.assertEquals(expected.getMaxPrice(), actual.getMaxPrice());

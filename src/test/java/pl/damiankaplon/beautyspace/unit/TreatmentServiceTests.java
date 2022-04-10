@@ -80,7 +80,7 @@ public class TreatmentServiceTests {
         changes.setName("changed");
         changes.setShortDescription("short desc changed");
         changes.setFullDescription("full desc changed");
-        changes.setAproxTime("03:59");
+        changes.setAproxTime("4567");
         changes.setChosenTypes(Set.of("Full body"));
         changes.setMinPrice("100");
         changes.setMaxPrice("1000");
@@ -106,7 +106,7 @@ public class TreatmentServiceTests {
         Assertions.assertEquals(changes.getName(), changedTreatment.getName());
         Assertions.assertEquals(changes.getShortDescription(), changedTreatment.getShortDescription());
         Assertions.assertEquals(changes.getFullDescription(), changedTreatment.getFullDescription());
-        Assertions.assertEquals(changes.getAproxTime(), changedTreatment.getAproxTime().toString());
+        Assertions.assertEquals(Long.valueOf(changes.getAproxTime()), changedTreatment.getAproxTime().getSeconds());
         Assertions.assertEquals(changes.getChosenTypes(), changedTreatment.getTypesNames());
         Assertions.assertEquals(changes.getMinPriceValue(), changedTreatment.getMinPrice());
         Assertions.assertEquals(changes.getMaxPriceValue(), changedTreatment.getMaxPrice());

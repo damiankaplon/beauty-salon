@@ -2,7 +2,7 @@ package pl.damiankaplon.beautyspace.core.domain;
 
 import lombok.*;
 
-import java.time.LocalTime;
+import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,7 +12,7 @@ public class Treatment {
     @Getter  private UUID uuid;
     @Getter private String name;
     @Getter private String shortDescription, fullDescription;
-    @Getter private LocalTime aproxTime;
+    @Getter private Duration aproxTime;
     private PriceRange priceRange;
     private Set<TreatmentType> types;
     private Set<Image> images;

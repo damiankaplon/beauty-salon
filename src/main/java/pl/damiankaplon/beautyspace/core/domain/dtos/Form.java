@@ -3,7 +3,7 @@ package pl.damiankaplon.beautyspace.core.domain.dtos;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.Duration;
 import java.util.Set;
 
 @Data
@@ -11,7 +11,6 @@ import java.util.Set;
 public class Form {
     private String name, shortDescription, fullDescription, minPrice, maxPrice, aproxTime;
     private Set<String> chosenTypes;
-
 
 
     public Float getMinPriceValue() {
@@ -22,7 +21,7 @@ public class Form {
         return Float.valueOf(this.maxPrice);
     }
 
-    public LocalTime getAproxTimeAsLocalTime() {
-        return LocalTime.parse(aproxTime);
+    public Duration getAproxTimeAsDuration() {
+        return Duration.ofSeconds(Long.parseLong(this.aproxTime));
     }
 }

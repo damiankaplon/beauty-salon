@@ -38,9 +38,10 @@
             </div><!-- / project-info-box -->
 
             <div class="project-info-box">
+                <span id="seconds" hidden th:text="*{dto.aproxTime.getSeconds()}"></span>
                 <p>
                     <b>Approximate time:</b>
-                    <span th:text="*{dto.aproxTime}+' h'" th:remove="tag">time</span>
+                    <span id="aprox-time"></span>
                 </p>
                 <p>
                     <b>Price from:</b>
@@ -74,5 +75,13 @@
 <footer th:replace="/common/footer.html"></footer>
 
 <script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+<script src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+<script>
+    let seconds = $('#seconds').text();
+    let hours = Math.floor(seconds / 3600);
+    let minutes = Math.floor((seconds % 3600) / 60);
+        $('#aprox-time').text(hours + ' Hour ' + minutes + 'Min');
+
+</script>
 </body>
 </html>

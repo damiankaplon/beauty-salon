@@ -14,6 +14,7 @@ import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
 import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class TreatmentService implements Web {
         Treatment withChanges = Treatment.builder()
                 .uuid(toBeChanged.getUuid())
                 .name(changes.getName())
-                .aproxTime(LocalTime.parse(changes.getAproxTime()))
+                .aproxTime(Duration.ofSeconds(Long.parseLong(changes.getAproxTime())))
                 .shortDescription(changes.getShortDescription())
                 .fullDescription(changes.getFullDescription())
                 .images(images.stream().map(ImageDto::getPathToFile).collect(Collectors.toSet()))
@@ -76,7 +77,7 @@ public class TreatmentService implements Web {
                 .fullDescription(form.getFullDescription())
                 .types(form.getChosenTypes())
                 .priceRange(form.getMinPriceValue(), form.getMaxPriceValue())
-                .aproxTime(form.getAproxTimeAsLocalTime())
+                .aproxTime(form.getAproxTimeAsDuration())
                 .images(images.stream()
                                 .map(ImageDto::getPathToFile)
                                 .collect(Collectors.toSet())

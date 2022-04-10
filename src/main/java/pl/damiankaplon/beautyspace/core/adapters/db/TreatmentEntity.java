@@ -6,7 +6,7 @@ import org.hibernate.annotations.Cascade;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.Duration;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -23,7 +23,7 @@ class TreatmentEntity {
     private UUID uuid;
     private String name;
     private String shortDescription, fullDescription;
-    private LocalTime aproxTime;
+    private long durationSeconds;
     private Float minPrice, maxPrice;
 
     @ElementCollection(targetClass = TreatmentType.class)
@@ -42,7 +42,7 @@ class TreatmentEntity {
         entity.setName(treatment.getName());
         entity.setShortDescription(treatment.getShortDescription());
         entity.setFullDescription(treatment.getFullDescription());
-        entity.setAproxTime(treatment.getAproxTime());
+        entity.setDurationSeconds(treatment.getAproxTime().getSeconds());
         entity.setMinPrice(treatment.getMinPrice());
         entity.setMaxPrice(treatment.getMaxPrice());
         entity.setTypes(treatment.getTypesNames().stream()
@@ -63,7 +63,7 @@ class TreatmentEntity {
                 .name(entity.getName())
                 .shortDescription(entity.getShortDescription())
                 .fullDescription(entity.getFullDescription())
-                .aproxTime(entity.getAproxTime())
+                .aproxTime(Duration.ofSeconds(entity.getDurationSeconds()))
                 .priceRange(entity.getMinPrice(), entity.getMaxPrice())
                 .images(
                         entity.getImages().stream()

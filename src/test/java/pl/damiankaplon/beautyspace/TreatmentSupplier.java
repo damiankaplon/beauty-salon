@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class TreatmentSupplier {
                 .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
                 .types(Set.of("Face"))
                 .images(Set.of(faker.lorem().characters(10) + ".jpg"))
-                .aproxTime(LocalTime.parse("02:00"))
+                .aproxTime(Duration.ofSeconds(7200))
                 .build();
     }
 
@@ -40,7 +41,7 @@ public class TreatmentSupplier {
                 .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
                 .types(Set.of("Face"))
                 .images(Set.of(faker.lorem().characters(10) + "jpg"))
-                .aproxTime(LocalTime.parse("02:00"))
+                .aproxTime(Duration.ofSeconds(7200))
                 .build();
     }
 
@@ -53,7 +54,7 @@ public class TreatmentSupplier {
                 .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
                 .types(Set.of("Face"))
                 .images(Set.of(faker.lorem().characters(10) + "jpg"))
-                .aproxTime(LocalTime.parse("02:00"))
+                .aproxTime(Duration.ofSeconds(7200))
                 .build();
     }
 
@@ -66,7 +67,7 @@ public class TreatmentSupplier {
                 .priceRange((float) faker.number().numberBetween(10, 99), (float) faker.number().numberBetween(100, 1000))
                 .types(Set.of(type))
                 .images(Set.of(faker.lorem().characters(10) + "jpg"))
-                .aproxTime(LocalTime.parse("02:00"))
+                .aproxTime(Duration.ofSeconds(7200))
                 .build();
     }
 
