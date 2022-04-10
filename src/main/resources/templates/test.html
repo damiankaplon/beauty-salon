@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Adding</title>
+  <link href="../static/css/jquery.timesetter.css" rel="stylesheet">
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<input type="hidden" name="example" />
+<input  id="output-example" type="hidden" />
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="../static/js/jquery.durationpicker.min.js"></script>
+<script>
+  $('input[name=example]').durationPicker()
+          .on("change", function($val){
+            $('#output-example').text("Duration (secs): " + $(this).val());
+          });
+
+  $('input[name=example]').durationPicker({
+    showDays: false,
+    showHours: true,
+    showMins: true
+  });
+
+  $('input[name=example]').durationPicker({
+    allowZeroTime: false
+  });
+
+</script>
+</body>
+</html>
+

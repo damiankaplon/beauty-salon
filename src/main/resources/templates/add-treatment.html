@@ -32,7 +32,6 @@
       cursor: pointer;
     }
   </style>
-  <script th:src="@{/js/html-duration-picker.min.js}"></script>
 </head>
 
 <body>
@@ -64,10 +63,9 @@
     <hr>
     <div class="form-group">
       <hr>
-      <label for="aprox-time">Approximate time</label>
-      <input th:field="*{aproxTime}"
-             class="form-control html-duration-picker" data-hide-hours data-duration-max="00:32:00"
-             id="aprox-time" style="text-align: left;" />
+      <label for="time-value">Approximate time</label>
+      <input type="hidden" name="aprox-time" class="btn-outline-primary" />
+      <input th:field="*{aproxTime}" id="time-value" type="hidden" />
     </div>
     <hr>
     <div class="form-group">
@@ -93,6 +91,15 @@
 <!-- Footer-->
 <footer th:replace="/common/footer.html"></footer>
 
-<script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+<script th:src="@{/js/bootstrap.bundle.min.js}" src="../static/js/bootstrap.bundle.min.js"> </script>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script th:src="@{/js/jquery.durationpicker.min.js}" src="../static/js/jquery.durationpicker.min.js"></script>
+<script>
+  $('input[name=aprox-time]').durationpicker({showDays: false})
+          .on("change", function($val){
+            $('#time-value').text("" + $(this).val());
+          });
+
+</script>
 </body>
 </html>
