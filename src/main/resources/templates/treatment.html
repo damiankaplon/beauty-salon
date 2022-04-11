@@ -66,13 +66,18 @@
                   <p class="card-text" th:text="*{dto.shortDescription}" style="width: 100%; height: 10em"></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">
+                      <button type="button" class="btn btn-sm btn-outline-primary">
                         <a th:href="@{'/treatment/uuid/' + *{dto.uuid}}">View</a>
                       </button>
                       <button type="button" sec:authorize="hasAuthority('WRITE_PRIVILEGE')"
                               class="btn btn-sm btn-outline-secondary">
                         <a th:href="@{'/treatment/uuid/' + *{dto.uuid} + '/edit'}">Edit</a>
-                      </button>
+                        <form th:action="@{'/treatment/uuid/' + *{dto.uuid} + '/delete'}" method="post">
+                          <button type="submit" sec:authorize="hasAuthority('WRITE_PRIVILEGE')"
+                                  class="btn btn-sm btn-outline-secondary">
+                              Delete
+                          </button>
+                        </form>
                     </div>
                   </div>
                 </div>

@@ -69,9 +69,9 @@
             <hr>
             <div class="form-group">
                 <hr>
-                <label for="aprox-time">Approximate time</label>
-                <input th:field="*{aproxTime}"
-                       class="form-control html-duration-picker" data-hide-seconds id="aprox-time" style="text-align: left;" />
+                <label for="time-value">Approximate time</label>
+                <input type="hidden" name="aprox-time" class="btn-outline-primary" />
+                <input th:field="*{aproxTime}" id="time-value" type="hidden" />
             </div>
             <hr>
             <div class="form-group">
@@ -99,6 +99,14 @@
 <!-- Footer-->
 <footer th:replace="/common/footer.html"></footer>
 
-<script src="../static/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"> </script>
+<script th:src="@{/js/bootstrap.bundle.min.js}" src="../static/js/bootstrap.bundle.min.js"> </script>
+<script src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/jquery.durationpicker.min.js}" src="../static/js/jquery.durationpicker.min.js"></script>
+<script>
+    $('input[name=aprox-time]').durationPicker({showDays: false,  hoursLabel: "Hours", minsLabel:"Minutes"})
+        .on("change", function($val){
+            $('#time-value').val($(this).val());
+        });
+</script>
 </body>
 </html>

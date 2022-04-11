@@ -68,6 +68,12 @@ public class TreatmentController {
         return "common/success";
     }
 
+    @PostMapping("/uuid/{uuid}/delete")
+    public String updateTreatment(@PathVariable String uuid, Model model) throws IOException {
+        treatmentService.deleteTreatment(UUID.fromString(uuid));
+        return "common/success";
+    }
+
     @PostMapping("/search")
     public String searchFromTreatmentByNameAndType(SearchForm form, Model model) {
         List<Treatment> dtos = treatmentService.getAllByNameAndType(form.getName(), form.getChosenType());

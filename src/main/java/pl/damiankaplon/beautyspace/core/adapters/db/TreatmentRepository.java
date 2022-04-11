@@ -10,4 +10,5 @@ interface TreatmentRepository extends JpaRepository<TreatmentEntity, Long> {
     List<TreatmentEntity> findByNameIgnoreCaseContaining(String name);
     List<TreatmentEntity> findAllByTypesContains(TreatmentType type);
     List<TreatmentEntity> findByNameIgnoreCaseContainingAndTypesContaining(String name, TreatmentType type);
+    void deleteByUuid(UUID uuid);
 }

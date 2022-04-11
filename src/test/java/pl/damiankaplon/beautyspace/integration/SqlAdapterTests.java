@@ -97,6 +97,27 @@ public class SqlAdapterTests {
         Assertions.assertThat(underTest).hasSize(2);
         underTest.forEach(t -> Assertions.assertThat(t.getName()).containsIgnoringCase("peeling"));
         underTest.forEach(t -> Assertions.assertThat(t.getTypesNames()).contains("Face"));
+    }
 
+    @Test
+    public void deletesWithoutException() {
+        //GIVEN
+        UUID uuid = UUID.randomUUID();
+        Treatment example = treatmentSupplier.randomWithUuid(uuid);
+        sqlAdapter.save(example);
+        //WHEN & THEN
+        Assertions.assertThatNoException().isThrownBy(() -> sqlAdapter.delete(uuid));
+    }
+
+    @Test
+    public void deletedDoesntExistInDbAnymore() {
+        //GIVEN
+        UUID uuid = UUID.randomUUID();
+        Treatment example = treatmentSupplier.randomWithUuid(uuid);
+        sqlAdapter.save(example);
+        //WHEN
+        sqlAdapter.delete(uuid);
+        //THEN
+        Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(()->sqlAdapter.findByUuid(uuid));
     }
 }

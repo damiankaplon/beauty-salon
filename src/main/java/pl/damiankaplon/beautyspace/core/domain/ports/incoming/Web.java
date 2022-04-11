@@ -17,4 +17,5 @@ public interface Web {
     List<Treatment> getAllByNameAndType(String name, String type);
     List<String> getAllTypes();
     Treatment editTreatment(UUID toChange, Form changes, MultipartFile[] imgs) throws IOException;
+    void deleteTreatment(UUID fromString);
 }

@@ -12,4 +12,5 @@ public interface Database {
     List<Treatment> findAll();
     Treatment save(Treatment treatment);
     Treatment update(Treatment treatment);
+    void delete(UUID uuid);
 }

@@ -20,7 +20,7 @@ public class LocalStorageUploader implements ImageUploader {
 
     public List<ImageDto> upload(List<MultipartFile> pictures) throws IOException {
         List<ImageDto> dtos = new ArrayList<>();
-        if (pictures == null || pictures.size() <= 0) return dtos;
+        if (!arePicturesValid(pictures)) return dtos;
 
         for (MultipartFile picture : pictures) {
             byte[] bytes = picture.getBytes();
@@ -41,5 +41,11 @@ public class LocalStorageUploader implements ImageUploader {
         }
 
         return dtos;
+    }
+
+    private boolean arePicturesValid(List<MultipartFile> pictures) {
+        if (pictures == null) return false;
+        if (pictures.size() <= 0) return false;
+        return !(pictures.stream().allMatch(MultipartFile::isEmpty));
     }
 }

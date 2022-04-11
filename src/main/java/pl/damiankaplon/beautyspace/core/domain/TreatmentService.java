@@ -13,9 +13,9 @@ import pl.damiankaplon.beautyspace.core.domain.ports.incoming.Web;
 import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
 import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,6 +57,11 @@ public class TreatmentService implements Web {
     }
 
     @Override
+    public void deleteTreatment(UUID uuid) {
+        databasePort.delete(uuid);
+    }
+
+    @Override
     public Page<Treatment> getTreatmentsPage(int page) {
         int pageSize = 6;
         Pageable pageable = PageRequest.of(page - 1, pageSize);
@@ -68,6 +73,7 @@ public class TreatmentService implements Web {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Treatment addNewTreatment(Form form, MultipartFile[] imgs) throws IOException {
         List<ImageDto> images  = imageUploader.upload(List.of(imgs));
         Treatment toAdd = Treatment.builder()

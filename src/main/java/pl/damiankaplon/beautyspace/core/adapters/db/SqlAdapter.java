@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.damiankaplon.beautyspace.core.domain.Treatment;
 import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -33,6 +34,12 @@ public class SqlAdapter implements Database {
         TreatmentEntity toSave = TreatmentEntity.of(treatment);
         toSave.setId(entity.getId());
         return TreatmentEntity.to(repo.save(toSave));
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID uuid) {
+        repo.deleteByUuid(uuid);
     }
 
     @Override
