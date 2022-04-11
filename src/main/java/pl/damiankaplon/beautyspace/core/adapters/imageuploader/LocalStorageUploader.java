@@ -15,9 +15,12 @@ import java.util.List;
 
 @Component
 public class LocalStorageUploader implements ImageUploader {
+
+    private static final String STORAGE_PATH = "/src/main/resources/static/ServicesPictures/";
+
     public List<ImageDto> upload(List<MultipartFile> pictures) throws IOException {
         List<ImageDto> dtos = new ArrayList<>();
-        if (pictures == null || pictures.size() == 0) return dtos;
+        if (pictures == null || pictures.size() <= 0) return dtos;
 
         for (MultipartFile picture : pictures) {
             byte[] bytes = picture.getBytes();
@@ -25,14 +28,14 @@ public class LocalStorageUploader implements ImageUploader {
             LocalDateTime timestamp = LocalDateTime.now();
             Path pathToSave = Paths.get(
                     Paths.get("").toAbsolutePath()
-                            + "/src/main/resources/static/ServicesPictures/"
+                            + STORAGE_PATH
                             + timestamp
-                            + picture.getOriginalFilename());
+                            + picture.getName());
             Files.write(pathToSave, bytes);
 
             String pathForObjects = "/ServicesPictures/"
                     + timestamp
-                    + picture.getOriginalFilename();
+                    + picture.getName();
 
             dtos.add(new ImageDto(pathForObjects));
         }
