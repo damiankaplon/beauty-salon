@@ -38,11 +38,13 @@
           </p>
           <form action="#" th:action="@{/treatment/search}" method="post" th:object="${searchForm}" class="input-group">
 
-              <select th:field="*{chosenType}" class="btn btn-outline-primary" style="border-radius: 0.2em">
-                <option value="" selected="selected" disabled hidden>Choose type</option>
+              <select id="chosenType" name="chosenType" th:with="chosenType=*{chosenType}"
+                      class="btn btn-outline-primary" style="border-radius: 0.2em">
+                <option value="" hidden disabled selected> Choose here</option>
                 <option th:each="type : ${types}"
                       th:value="${type}"
-                      th:text="${type}"></option>
+                      th:text="${type}">
+                </option>
               </select>
 
             <input type="text" th:field="*{name}" id="search-input" class="form-control rounded" placeholder="Search" aria-label="Search"/>
