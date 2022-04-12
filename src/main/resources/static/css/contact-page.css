@@ -1,0 +1,42 @@
+
+#content {
+    color: white;
+    position: relative;
+}
+caption {
+    color: white;
+}
+address {
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid black;
+    padding: 15px;
+    background: #3d3b3b;
+    border-radius: 10px;
+    font-size: 25px;
+
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+
+    position: absolute;
+    left: 50%;
+    top:5%;
+    -webkit-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+}
+
+table.no-spacing {
+    border-spacing:0; /* Removes the cell spacing via CSS */
+    border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
+}
+
+td:nth-child(2) {
+    border-bottom: 1px solid black;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

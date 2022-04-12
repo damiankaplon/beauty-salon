@@ -14,7 +14,7 @@ dev-env-down:
 dev-env-clean: dev-env-down
 	docker volume remove $(VOLUME)
 
-run-dev-up:
+run-dev-app:
 	mvn spring-boot:start -Dspring-boot.run.profiles=dev -f pom.xml
 
 stop-dev-app:
