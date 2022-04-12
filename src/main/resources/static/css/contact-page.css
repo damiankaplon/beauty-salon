@@ -9,11 +9,11 @@ caption {
 address {
     width: fit-content;
     height: fit-content;
-    border: 1px solid black;
-    padding: 15px;
+    border: 0.1em solid black;
+    padding: 1em;
     background: #3d3b3b;
-    border-radius: 10px;
-    font-size: 25px;
+    border-radius: 1em;
+    font-size: 1em;
 
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
@@ -21,9 +21,8 @@ address {
 
     position: absolute;
     left: 50%;
-    top:5%;
-    -webkit-transform: translate(-50%, 50%);
-    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-50%, 25%);
+    transform: translate(-50%, 25%);
 }
 
 table.no-spacing {
@@ -32,7 +31,7 @@ table.no-spacing {
 }
 
 td:nth-child(2) {
-    border-bottom: 1px solid black;
+    border-bottom: 0.1em solid black;
 }
 
 a {
