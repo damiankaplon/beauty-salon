@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 enum TreatmentType {
 
-    FULL_BODY("Body"), FACE("Face"),
-    LEGS("Cosmetic");
+    BODY("Body"), FACE("Face"),
+    COSMETICS("Cosmetic");
 
     final String bodyPartName;
 

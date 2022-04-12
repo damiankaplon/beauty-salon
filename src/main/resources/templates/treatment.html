@@ -33,7 +33,7 @@
             to treat yourself. Go ahead, take a look, see the detailed view and set the appointment!
           </p>
           <p>
-            <a href="#" class="btn btn-primary my-2 border-bottom">Make an appointment</a>
+<!--            <a href="#" class="btn btn-primary my-2 border-bottom">Make an appointment</a>-->
             <a sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:href="@{/treatment/add}" class="btn btn-secondary my-2">Add treatment</a>
           </p>
           <form action="#" th:action="@{/treatment/search}" method="post" th:object="${searchForm}" class="input-group">
@@ -89,7 +89,7 @@
           <div th:if="${dtoPage.totalPages > 0}" class="justify-content-center">
             <ul class="pagination justify-content-center">
               <li class="page-item">
-                <a th:if="${dtoPage.number - 1 >= 0}" th:href="@{/treatment(page=${dtoPage.number - 1})}"
+                <a th:if="${dtoPage.number - 1 >= 0}" th:href="@{/treatment(page=${dtoPage.number})}"
                    th:text="Prev"
                    class="page-link"></a>
               </li>
@@ -100,7 +100,7 @@
                    class="page-link"></a>
               </li>
               <li class="page-item">
-                <a th:if="${dtoPage.number + 2 <= dtoPage.totalPages}" th:href="@{/treatment(page=${dtoPage.number+1})}"
+                <a th:if="${dtoPage.number + 2 <= dtoPage.totalPages}" th:href="@{/treatment(page=${dtoPage.number+2})}"
                    th:text="Next"
                    class="page-link"></a>
               </li>

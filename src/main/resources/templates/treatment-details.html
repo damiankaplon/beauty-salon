@@ -69,7 +69,7 @@
                  th:if="${src != null}"
                  th:src="@{${src}}" alt="image" class="rounded"><!-- / project-info-box -->
             <div class="project-info-box">
-                <p><b>Categories:</b> <span th:each="type : ${dto.getTypesNames()}" th:text="${type}"></span></p>
+                <p><b>Category:</b> <span th:each="type : ${dto.getTypesNames()}" th:text="${type}"></span></p>
             </div>
         </div><!-- / column -->
     </div>

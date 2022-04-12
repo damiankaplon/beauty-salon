@@ -30,12 +30,12 @@ public class LocalStorageUploader implements ImageUploader {
                     Paths.get("").toAbsolutePath()
                             + STORAGE_PATH
                             + timestamp
-                            + picture.getName());
+                            + picture.getOriginalFilename());
             Files.write(pathToSave, bytes);
 
             String pathForObjects = "/ServicesPictures/"
                     + timestamp
-                    + picture.getName();
+                    + picture.getOriginalFilename();
 
             dtos.add(new ImageDto(pathForObjects));
         }
