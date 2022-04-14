@@ -25,7 +25,7 @@ public class TreatmentController {
     private final TreatmentService treatmentService;
     private final ModelMapper mapper;
 
-    @GetMapping("")
+    @GetMapping
     public String getPagedTreatments(Model model, @RequestParam("page")Optional<Integer> page) {
         int currentPage = page.orElse(1);
         Page<Treatment> treatmentsPage = treatmentService.getTreatmentsPage(currentPage);

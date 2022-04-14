@@ -19,10 +19,11 @@ import java.util.stream.Collectors;
 class TreatmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private UUID uuid;
     private String name;
-    private String shortDescription, fullDescription;
+    private String shortDescription;
+    private String fullDescription;
     private long durationSeconds;
     private Float minPrice, maxPrice;
 
