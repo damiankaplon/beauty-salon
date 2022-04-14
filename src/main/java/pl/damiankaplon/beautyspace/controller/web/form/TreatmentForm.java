@@ -3,7 +3,7 @@ package pl.damiankaplon.beautyspace.controller.web.form;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 
 import java.time.LocalTime;
 import java.util.Set;

@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautyspace.core.adapters.imageuploader.LocalStorageUploader;
-import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
-import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
+import pl.damiankaplon.beautyspace.treatment.adapters.imageuploader.LocalStorageUploader;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageUploader;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -30,9 +30,6 @@ public class ImageUploaderTests {
 
         //THEN
         Assertions.assertThat(underTest).hasSize(2);
-        Assertions.assertThat(underTest).allMatch(i -> {
-            return !i.getPathToFile().isEmpty() && i.getPathToFile().contains(".jpg");
-        });
     }
 
     @Test

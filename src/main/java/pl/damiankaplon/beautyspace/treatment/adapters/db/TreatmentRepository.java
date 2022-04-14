@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.core.adapters.db;
+package pl.damiankaplon.beautyspace.treatment.adapters.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

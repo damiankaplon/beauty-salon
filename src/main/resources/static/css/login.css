@@ -7,7 +7,6 @@ html {
 
 body {
     font-family: "Poppins", sans-serif;
-    height: 100vh;
 }
 
 a {
@@ -37,7 +36,6 @@ h2 {
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    min-height: 100%;
     padding: 20px;
 }
 
@@ -49,7 +47,6 @@ h2 {
     width: 90%;
     max-width: 450px;
     position: relative;
-    padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     text-align: center;

@@ -1,9 +1,9 @@
-package pl.damiankaplon.beautyspace.core.adapters.imageuploader;
+package pl.damiankaplon.beautyspace.treatment.adapters.imageuploader;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
-import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageUploader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,12 +30,12 @@ public class LocalStorageUploader implements ImageUploader {
                     Paths.get("").toAbsolutePath()
                             + STORAGE_PATH
                             + timestamp
-                            + picture.getName());
+                            + picture.getOriginalFilename());
             Files.write(pathToSave, bytes);
 
             String pathForObjects = "/ServicesPictures/"
                     + timestamp
-                    + picture.getName();
+                    + picture.getOriginalFilename();
 
             dtos.add(new ImageDto(pathForObjects));
         }

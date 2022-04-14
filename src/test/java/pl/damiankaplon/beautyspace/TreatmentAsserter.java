@@ -1,7 +1,7 @@
 package pl.damiankaplon.beautyspace;
 
 import org.junit.jupiter.api.Assertions;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 
 public class TreatmentAsserter {
     public static void assertEquals(Treatment expected, Treatment actual) {

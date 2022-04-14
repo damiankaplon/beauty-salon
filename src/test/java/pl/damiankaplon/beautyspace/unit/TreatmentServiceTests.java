@@ -11,12 +11,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockMultipartFile;
 import pl.damiankaplon.beautyspace.TreatmentSupplier;
-import pl.damiankaplon.beautyspace.core.adapters.db.SqlAdapter;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
-import pl.damiankaplon.beautyspace.core.domain.TreatmentService;
-import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
-import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
-import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
+import pl.damiankaplon.beautyspace.treatment.adapters.db.SqlAdapter;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageUploader;
 
 import java.io.IOException;
 import java.util.*;
@@ -67,7 +67,7 @@ public class TreatmentServiceTests {
 
     @Test
     public void returnsAllClientsRequiredTreatmentTypes() {
-        Set<String> clientRequires = Set.of("Face", "Full body", "Hands", "Legs", "Back", "Chest", "Stomach");
+        Set<String> clientRequires = Set.of("Face", "Body", "Cosmetic");
         Set<String> types = new HashSet<>(service.getAllTypes());
         Assertions.assertEquals(clientRequires, types);
     }
@@ -81,7 +81,7 @@ public class TreatmentServiceTests {
         changes.setShortDescription("short desc changed");
         changes.setFullDescription("full desc changed");
         changes.setAproxTime("4567");
-        changes.setChosenTypes(Set.of("Full body"));
+        changes.setChosenTypes(Set.of("Body"));
         changes.setMinPrice("100");
         changes.setMaxPrice("1000");
         MockMultipartFile[] images = new MockMultipartFile[] {

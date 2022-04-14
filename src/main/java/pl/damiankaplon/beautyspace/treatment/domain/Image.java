@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.core.domain;
+package pl.damiankaplon.beautyspace.treatment.domain;
 
 import lombok.Value;
 
