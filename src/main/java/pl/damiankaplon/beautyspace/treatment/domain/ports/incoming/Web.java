@@ -1,9 +1,9 @@
-package pl.damiankaplon.beautyspace.core.domain.ports.incoming;
+package pl.damiankaplon.beautyspace.treatment.domain.ports.incoming;
 
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
-import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
 
 import java.io.IOException;
 import java.util.List;

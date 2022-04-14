@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.core.adapters.db;
+package pl.damiankaplon.beautyspace.treatment.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,6 @@ enum TreatmentType {
 
     BODY("Body"), FACE("Face"),
     COSMETICS("Cosmetic");
-
 
     final String bodyPartName;
 

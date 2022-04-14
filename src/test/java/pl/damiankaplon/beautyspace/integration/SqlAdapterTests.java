@@ -8,8 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import pl.damiankaplon.beautyspace.TreatmentAsserter;
 import pl.damiankaplon.beautyspace.TreatmentSupplier;
-import pl.damiankaplon.beautyspace.core.adapters.db.SqlAdapter;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.adapters.db.SqlAdapter;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 
 import java.util.List;
 import java.util.Map;
@@ -89,7 +89,7 @@ public class SqlAdapterTests {
     public void returnsTreatmentsWithNameAndTypeLike() {
         //GIVEN
         Map<String, String> properties = Map
-                .of("peeling", "Face", "Other Peeling", "Face", "example", "Full body");
+                .of("peeling", "Face", "Other Peeling", "Face", "example", "Body");
         properties.forEach((k, v) -> sqlAdapter.save(treatmentSupplier.randomWithNameAndType(k, v)));
         //WHEN
         List<Treatment> underTest = sqlAdapter.findAllByNameContainingAndTypesContaining("peeling", "Face");

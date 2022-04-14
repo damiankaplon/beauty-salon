@@ -1,6 +1,6 @@
-package pl.damiankaplon.beautyspace.core.domain.ports.outgoing;
+package pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing;
 
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 
 import java.util.List;
 import java.util.UUID;

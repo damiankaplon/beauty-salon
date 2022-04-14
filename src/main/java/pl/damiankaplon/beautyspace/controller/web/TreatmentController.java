@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.damiankaplon.beautyspace.controller.web.form.SearchForm;
 import pl.damiankaplon.beautyspace.controller.web.form.TreatmentForm;
-import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
-import pl.damiankaplon.beautyspace.core.domain.TreatmentService;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 
 import java.io.IOException;
 import java.util.*;

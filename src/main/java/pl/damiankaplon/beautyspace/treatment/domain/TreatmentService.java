@@ -1,4 +1,4 @@
-package pl.damiankaplon.beautyspace.core.domain;
+package pl.damiankaplon.beautyspace.treatment.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,11 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.damiankaplon.beautyspace.core.domain.dtos.Form;
-import pl.damiankaplon.beautyspace.core.domain.dtos.ImageDto;
-import pl.damiankaplon.beautyspace.core.domain.ports.incoming.Web;
-import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.Database;
-import pl.damiankaplon.beautyspace.core.domain.ports.outgoing.ImageUploader;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
+import pl.damiankaplon.beautyspace.treatment.domain.dtos.ImageDto;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.incoming.Web;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.Database;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageUploader;
 
 import javax.transaction.Transactional;
 import java.io.IOException;

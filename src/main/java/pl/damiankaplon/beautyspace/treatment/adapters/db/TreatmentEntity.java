@@ -1,9 +1,9 @@
-package pl.damiankaplon.beautyspace.core.adapters.db;
+package pl.damiankaplon.beautyspace.treatment.adapters.db;
 
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
-import pl.damiankaplon.beautyspace.core.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 
 import javax.persistence.*;
 import java.time.Duration;
