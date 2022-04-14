@@ -20,11 +20,8 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails user = repo.findByUsername(username);
-        if (user == null)
-            throw new UsernameNotFoundException("User doesnt exists");
-        else
-            return user;
+        return repo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User doesnt exists"));
     }
 
     public AccountDto register(AccountDto dto) {
