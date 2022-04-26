@@ -13,8 +13,8 @@ import pl.damiankaplon.beautyspace.controller.web.form.TreatmentForm;
 import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
 import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageServiceException;
 
-import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -61,7 +61,7 @@ public class TreatmentController {
 
     @PostMapping("/uuid/{uuid}/edit")
     public String updateTreatment(@PathVariable String uuid, TreatmentForm form,
-                                  @RequestParam("imgs") MultipartFile[] imgs, Model model) throws IOException {
+                                  @RequestParam("imgs") MultipartFile[] imgs, Model model) throws ImageServiceException{
         Form domainForm = mapper.map(form, Form.class);
         Treatment changed = treatmentService.editTreatment(UUID.fromString(uuid), domainForm, imgs);
         model.addAttribute("treatment", changed);
@@ -69,7 +69,7 @@ public class TreatmentController {
     }
 
     @PostMapping("/uuid/{uuid}/delete")
-    public String updateTreatment(@PathVariable String uuid, Model model) throws IOException {
+    public String updateTreatment(@PathVariable String uuid) throws ImageServiceException {
         treatmentService.deleteTreatment(UUID.fromString(uuid));
         return "common/success";
     }
@@ -91,7 +91,7 @@ public class TreatmentController {
     }
 
     @PostMapping("/add")
-    public String addNewTreatment(TreatmentForm form, @RequestParam("imgs") MultipartFile[] imgs, Model model) throws IOException {
+    public String addNewTreatment(TreatmentForm form, @RequestParam("imgs") MultipartFile[] imgs, Model model) throws ImageServiceException {
         Form domainForm = mapper.map(form, Form.class);
         Treatment added = treatmentService.addNewTreatment(domainForm, imgs);
         model.addAttribute("treatment", added);

@@ -8,13 +8,10 @@ import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import java.time.Duration;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 @NoArgsConstructor
 @AllArgsConstructor
 public class TreatmentSupplier {
-
-    private Supplier<Treatment> supplier;
 
     private Faker faker = new Faker();
 

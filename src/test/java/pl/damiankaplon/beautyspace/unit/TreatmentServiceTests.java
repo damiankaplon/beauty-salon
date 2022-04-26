@@ -16,9 +16,9 @@ import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
 import pl.damiankaplon.beautyspace.treatment.domain.TreatmentService;
 import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
 import pl.damiankaplon.beautyspace.treatment.domain.dtos.ImageDto;
-import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageUploader;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageService;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageServiceException;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,7 +34,7 @@ public class TreatmentServiceTests {
     SqlAdapter databaseAdapter;
 
     @Mock
-    ImageUploader imageUploader;
+    ImageService imageService;
 
     @InjectMocks
     TreatmentService service;
@@ -73,7 +73,7 @@ public class TreatmentServiceTests {
     }
 
     @Test
-    public void editFullyTreatmentTest() throws IOException {
+    public void editFullyTreatmentTest() throws ImageServiceException {
         //GIVEN
         Form changes = new Form();
         changes.setChosenTypes(Set.of("Full body"));
@@ -93,7 +93,7 @@ public class TreatmentServiceTests {
 
         when(databaseAdapter.findByUuid(any(UUID.class)))
                 .thenReturn(treatmentSupplier.randomWithUuid(toChange));
-        when(imageUploader.upload(any()))
+        when(imageService.upload(any()))
                 .thenReturn(List.of(new ImageDto("image1.jpg"), new ImageDto("image2.jpg")));
         when(databaseAdapter.update(any(Treatment.class)))
                 .then(returnsFirstArg());

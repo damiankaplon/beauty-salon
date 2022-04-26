@@ -10,6 +10,7 @@ import pl.damiankaplon.beautyspace.TreatmentAsserter;
 import pl.damiankaplon.beautyspace.TreatmentSupplier;
 import pl.damiankaplon.beautyspace.treatment.adapters.db.SqlAdapter;
 import pl.damiankaplon.beautyspace.treatment.domain.Treatment;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.Database;
 
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @DataJpaTest
-@Import(SqlAdapter.class)
-public class SqlAdapterTests {
+@Import({SqlAdapter.class})
+public class DatabaseAdapterTests {
 
-    @Autowired private SqlAdapter sqlAdapter;
+    @Autowired private Database databaseAdapter;
 
     static TreatmentSupplier treatmentSupplier = new TreatmentSupplier();
 
@@ -30,9 +31,9 @@ public class SqlAdapterTests {
         List<Treatment> examples = Interval.fromTo(1, 5).stream()
                 .map(i -> treatmentSupplier.randomWithName(Integer.toString(i)))
                 .collect(Collectors.toList());
-        examples.forEach(sqlAdapter::save);
+        examples.forEach(databaseAdapter::save);
         //WHEN
-        List<Treatment> underTest = sqlAdapter.findAll();
+        List<Treatment> underTest = databaseAdapter.findAll();
         //THEN
         Assertions.assertThat(underTest).hasSize(5);
         Assertions.assertThat(underTest).containsAll(examples);
@@ -43,7 +44,7 @@ public class SqlAdapterTests {
         //GIVEN
         Treatment example = treatmentSupplier.random();
         //WHEN
-        Treatment underTest = sqlAdapter.save(example);
+        Treatment underTest = databaseAdapter.save(example);
         //THEN
         TreatmentAsserter.assertEquals(example, underTest);
     }
@@ -53,9 +54,9 @@ public class SqlAdapterTests {
         //GIVEN
         UUID uuid = UUID.randomUUID();
         Treatment example = treatmentSupplier.randomWithUuid(uuid);
-        sqlAdapter.save(example);
+        databaseAdapter.save(example);
         //WHEN
-        Treatment underTest = sqlAdapter.findByUuid(uuid);
+        Treatment underTest = databaseAdapter.findByUuid(uuid);
         //THEN
         TreatmentAsserter.assertEquals(example, underTest);
     }
@@ -64,10 +65,10 @@ public class SqlAdapterTests {
     public void returnsCorrectlyUpdatedTreatment() {
         //GIVEN
         Treatment example = treatmentSupplier.random();
-        sqlAdapter.save(example);
+        databaseAdapter.save(example);
         Treatment changes = treatmentSupplier.randomWithUuid(example.getUuid());
         //WHEN
-        Treatment underTest = sqlAdapter.update(changes);
+        Treatment underTest = databaseAdapter.update(changes);
         //THEN
         TreatmentAsserter.assertEquals(changes, underTest);
     }
@@ -76,10 +77,10 @@ public class SqlAdapterTests {
     public void returnsTreatmentsWithNameLikeGivenIgnoringCase() {
         //GIVEN
         List.of("Chemical peeling", "Peeling", "Other PeELiNg", "not the searched one")
-                .forEach(s -> sqlAdapter.save(treatmentSupplier.randomWithName(s)));
+                .forEach(s -> databaseAdapter.save(treatmentSupplier.randomWithName(s)));
         String searchingFor = "Peeling";
         //WHEN
-        List<Treatment> underTest = sqlAdapter.findByNameContainingIgnoreCase(searchingFor);
+        List<Treatment> underTest = databaseAdapter.findByNameContainingIgnoreCase(searchingFor);
         //THEN
         Assertions.assertThat(underTest).hasSize(3);
         underTest.forEach(t -> Assertions.assertThat(t.getName()).containsIgnoringCase(searchingFor));
@@ -90,9 +91,9 @@ public class SqlAdapterTests {
         //GIVEN
         Map<String, String> properties = Map
                 .of("peeling", "Face", "Other Peeling", "Face", "example", "Body");
-        properties.forEach((k, v) -> sqlAdapter.save(treatmentSupplier.randomWithNameAndType(k, v)));
+        properties.forEach((k, v) -> databaseAdapter.save(treatmentSupplier.randomWithNameAndType(k, v)));
         //WHEN
-        List<Treatment> underTest = sqlAdapter.findAllByNameContainingAndTypesContaining("peeling", "Face");
+        List<Treatment> underTest = databaseAdapter.findAllByNameContainingAndTypesContaining("peeling", "Face");
         //THEN
         Assertions.assertThat(underTest).hasSize(2);
         underTest.forEach(t -> Assertions.assertThat(t.getName()).containsIgnoringCase("peeling"));
@@ -104,9 +105,9 @@ public class SqlAdapterTests {
         //GIVEN
         UUID uuid = UUID.randomUUID();
         Treatment example = treatmentSupplier.randomWithUuid(uuid);
-        sqlAdapter.save(example);
+        databaseAdapter.save(example);
         //WHEN & THEN
-        Assertions.assertThatNoException().isThrownBy(() -> sqlAdapter.delete(uuid));
+        Assertions.assertThatNoException().isThrownBy(() -> databaseAdapter.delete(uuid));
     }
 
     @Test
@@ -114,10 +115,10 @@ public class SqlAdapterTests {
         //GIVEN
         UUID uuid = UUID.randomUUID();
         Treatment example = treatmentSupplier.randomWithUuid(uuid);
-        sqlAdapter.save(example);
+        databaseAdapter.save(example);
         //WHEN
-        sqlAdapter.delete(uuid);
+        databaseAdapter.delete(uuid);
         //THEN
-        Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(()->sqlAdapter.findByUuid(uuid));
+        Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(()->databaseAdapter.findByUuid(uuid));
     }
 }

@@ -11,7 +11,8 @@ import pl.damiankaplon.beautyspace.treatment.domain.dtos.Form;
 import pl.damiankaplon.beautyspace.treatment.domain.dtos.ImageDto;
 import pl.damiankaplon.beautyspace.treatment.domain.ports.incoming.Web;
 import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.Database;
-import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageUploader;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageService;
+import pl.damiankaplon.beautyspace.treatment.domain.ports.outgoing.ImageServiceException;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 public class TreatmentService implements Web {
 
     private final Database databasePort;
-    private final ImageUploader imageUploader;
+    private final ImageService imageService;
 
     @Override
     public Treatment getTreatment(UUID uuid) {
@@ -40,9 +41,9 @@ public class TreatmentService implements Web {
     }
 
     @Override
-    public Treatment editTreatment(UUID toChange, Form changes, MultipartFile[] imgs) throws IOException {
+    public Treatment editTreatment(UUID toChange, Form changes, MultipartFile[] imgs) throws ImageServiceException {
         Treatment toBeChanged = databasePort.findByUuid(toChange);
-        List<ImageDto> images = imageUploader.upload(List.of(imgs));
+        List<ImageDto> images = imageService.upload(List.of(imgs));
         Treatment withChanges = Treatment.builder()
                 .uuid(toBeChanged.getUuid())
                 .name(changes.getName())
@@ -57,7 +58,13 @@ public class TreatmentService implements Web {
     }
 
     @Override
-    public void deleteTreatment(UUID uuid) {
+    @Transactional(rollbackOn = Exception.class)
+    public void deleteTreatment(UUID uuid) throws ImageServiceException {
+        Set<ImageDto> imagesToDelete = databasePort.findByUuid(uuid).getImagesSrcs()
+                .stream()
+                        .map(ImageDto::new)
+                                .collect(Collectors.toSet());
+        imageService.delete(imagesToDelete);
         databasePort.delete(uuid);
     }
 
@@ -74,8 +81,8 @@ public class TreatmentService implements Web {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public Treatment addNewTreatment(Form form, MultipartFile[] imgs) throws IOException {
-        List<ImageDto> images  = imageUploader.upload(List.of(imgs));
+    public Treatment addNewTreatment(Form form, MultipartFile[] imgs) throws ImageServiceException {
+        List<ImageDto> images  = imageService.upload(List.of(imgs));
         Treatment toAdd = Treatment.builder()
                 .uuid(UUID.randomUUID())
                 .name(form.getName())
