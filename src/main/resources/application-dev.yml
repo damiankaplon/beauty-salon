@@ -1,5 +1,9 @@
 server:
     port: 9999
+    ssl:
+        key-password: zaq1@WSX
+        key-store-password: zaq1@WSX
+        key-store: src/main/resources/static/keystore.jks
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver
