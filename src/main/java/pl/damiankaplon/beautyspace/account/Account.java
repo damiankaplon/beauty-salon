@@ -28,6 +28,7 @@ class Account implements UserDetails {
     private String name;
     private String surname;
     private String password;
+    private String resetPasswordToken;
     @Enumerated(EnumType.STRING)
     private AccountAuthority authority;
     private boolean expired, locked, enabled;
@@ -65,5 +66,13 @@ class Account implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
